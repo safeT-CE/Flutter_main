@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/auth_helper.dart';
 
-class AuthPage extends StatelessWidget {
-  Future<void> _login(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', true);
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _phoneController = TextEditingController();
+  bool _autoLogin = false;
+
+  Future<void> _login() async {
+    // 여기에 실제 로그인 로직을 구현
+    await AuthHelper.setLoginStatus(true);
     Navigator.pushReplacementNamed(context, '/home');
   }
 
@@ -21,29 +30,49 @@ class AuthPage extends StatelessWidget {
             //Image.asset('assets/image/logo.png', height: 150),
             SizedBox(height: 16),
             Text(
-              '안전한 공공 전동 킥보드 사용을 위한 서비스 SafeT입니다.',
+              'LOGIN',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
             ),
             SizedBox(height: 32),
+            TextField(
+              controller: _phoneController,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.lightGreen[100],
+                hintText: '01012345678',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              keyboardType: TextInputType.phone,
+            ),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Checkbox(
+                  value: _autoLogin,
+                  onChanged: (value) {
+                    setState(() {
+                      _autoLogin = value!;
+                    });
+                  },
+                ),
+                Text('자동 로그인'),
+              ],
+            ),
+            SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              },
+              onPressed: _login,
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightGreen[100],
               ),
               child: Text('로그인'),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/agreement');
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.lightGreen[100],
-              ),
-              child: Text('회원가입'),
             ),
             SizedBox(height: 32),
             Text(
@@ -60,7 +89,7 @@ class AuthPage extends StatelessWidget {
             //       iconSize: 50,
             //       onPressed: () {
             //         // Google 로그인 로직
-            //         _login(context);
+            //         _login();
             //       },
             //     ),
             //     SizedBox(width: 16),
@@ -69,7 +98,7 @@ class AuthPage extends StatelessWidget {
             //       iconSize: 50,
             //       onPressed: () {
             //         // Naver 로그인 로직
-            //         _login(context);
+            //         _login();
             //       },
             //     ),
             //     SizedBox(width: 16),
@@ -78,7 +107,7 @@ class AuthPage extends StatelessWidget {
             //       iconSize: 50,
             //       onPressed: () {
             //         // Kakao 로그인 로직
-            //         _login(context);
+            //         _login();
             //       },
             //     ),
             //   ],
