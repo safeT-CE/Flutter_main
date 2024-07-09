@@ -17,9 +17,12 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
     Timer(Duration(seconds: 3), () {
       if (isLoggedIn) {
-        Navigator.pushReplacementNamed(context, '/home');
+        //Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/auth');
+
       } else {
         Navigator.pushReplacementNamed(context, '/auth');
       }

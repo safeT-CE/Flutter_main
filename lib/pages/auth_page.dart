@@ -18,7 +18,7 @@ class AuthPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset('assets/image/logo.png', height: 150),
+            //Image.asset('assets/image/logo.png', height: 150),
             SizedBox(height: 16),
             Text(
               '안전한 공공 전동 킥보드 사용을 위한 서비스 SafeT입니다.',
@@ -28,7 +28,7 @@ class AuthPage extends StatelessWidget {
             SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
-                _login(context);
+                Navigator.pushNamed(context, '/login');
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightGreen[100],
@@ -38,7 +38,7 @@ class AuthPage extends StatelessWidget {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                _login(context);
+                Navigator.pushNamed(context, '/agreement');
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightGreen[100],

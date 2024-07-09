@@ -15,7 +15,7 @@ class _AgreementPageState extends State<AgreementPage> {
       appBar: AppBar(
         title: Text('약관에 동의해 주세요.'),
         centerTitle: true,//title 중앙정렬
-        automaticallyImplyLeading: false, // 뒤로 가기 버튼 제거
+        automaticallyImplyLeading: false, //뒤로 가기 버튼 제거
         actions:[
           IconButton(
             icon: Icon(Icons.close),

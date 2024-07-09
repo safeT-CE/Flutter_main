@@ -8,7 +8,7 @@ class AuthNumberPage extends StatelessWidget {
         title: Text('번호'),
       ),
       body: Center(
-        child: Text('번호 페이지입니다.'),
+        child: Text('번호인증 페이지입니다.'),
       ),
     );
   }
