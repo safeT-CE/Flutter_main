@@ -1,11 +1,12 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:safet/main.dart'; 
+import 'package:camera/camera.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:safet/pages/auth_idinfo_check_page.dart';
 
 class IdCamPage extends StatefulWidget {
   final CameraDescription camera;
 
-  IdCamPage({required this.camera}); 
+  IdCamPage({required this.camera});
 
   @override
   _IdCamPageState createState() => _IdCamPageState();
@@ -14,6 +15,8 @@ class IdCamPage extends StatefulWidget {
 class _IdCamPageState extends State<IdCamPage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
+  final textDetector = GoogleMlKit.vision.textDetector();
+  List<String> _recognizedLines = [];
 
   @override
   void initState() {
@@ -29,64 +32,121 @@ class _IdCamPageState extends State<IdCamPage> {
   @override
   void dispose() {
     _controller.dispose();
+    textDetector.close();
     super.dispose();
+  }
+
+  Future<void> _processImage() async {
+    try {
+      await _initializeControllerFuture;
+      final image = await _controller.takePicture();
+      final inputImage = InputImage.fromFilePath(image.path);
+      final RecognisedText recognisedText = await textDetector.processImage(inputImage);
+
+      List<String> recognizedLines = [];
+
+      for (TextBlock block in recognisedText.blocks) {
+        for (TextLine line in block.lines) {
+          final text = line.text.trim();
+          recognizedLines.add(text);
+        }
+      }
+
+      setState(() {
+        _recognizedLines = recognizedLines;
+      });
+
+      if (_recognizedLines.isNotEmpty) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => IdInfoCheckPage(recognizedLines: _recognizedLines),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('텍스트를 인식하지 못했습니다. 다시 시도해주세요.')),
+        );
+      }
+
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('오류가 발생했습니다. 다시 시도해주세요.')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.close,color: safeTgray),
-            onPressed: () {
-              Navigator.pop(context);
+      body: Stack(
+        children: [
+          FutureBuilder<void>(
+            future: _initializeControllerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return CameraPreview(_controller);
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
             },
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            SizedBox(height: 16),
-            Text(
-              '신분증을 영역 안에 맞추고\n촬영해 주세요.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.close, color: Colors.grey),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             ),
-            SizedBox(height: 30),
-            FutureBuilder<void>(
-              future: _initializeControllerFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: CameraPreview(_controller),
-                      ),
-                      Container(
-                        width: 250,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.red, width: 2), // 빨간색 테두리
-                        ),
-                      ),
-                    ],
-                  );
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
+          ),
+          Positioned(
+            top: 100,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                Text(
+                  '신분증을 영역 안에 맞추고\n촬영해 주세요.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+                SizedBox(height: 30),
+                Container(
+                  width: 250,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.red, width: 2),
+                  ),
+                  child: ListView.builder(
+                    itemCount: _recognizedLines.length,
+                    itemBuilder: (context, index) {
+                      return Text(
+                        _recognizedLines[index],
+                        style: TextStyle(color: Colors.white),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 30),
-            Container(
+          ),
+          Positioned(
+            bottom: 150,
+            left: 16,
+            right: 16,
+            child: Container(
               padding: EdgeInsets.all(16),
-              color: Color(0xFFFFE4E1), // 배경색 핑크색
+              color: Color(0xFFFFE4E1),
               child: Row(
                 children: [
                   Icon(Icons.lightbulb_outline, color: Colors.yellow),
@@ -100,8 +160,12 @@ class _IdCamPageState extends State<IdCamPage> {
                 ],
               ),
             ),
-            Spacer(),
-            ElevatedButton(
+          ),
+          Positioned(
+            bottom: 50,
+            left: 16,
+            right: 16,
+            child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,
                 minimumSize: Size(double.infinity, 50),
@@ -109,17 +173,14 @@ class _IdCamPageState extends State<IdCamPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () {
-                // 다음 버튼 동작
-                Navigator.pushNamed(context, '/auth_idinfo');
-              },
+              onPressed: _processImage,
               child: Text(
                 '다음',
                 style: TextStyle(fontSize: 18),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

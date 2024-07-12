@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:safet/pages/agreement_page.dart';
 import 'package:safet/pages/auth_done_page.dart';
 import 'package:safet/pages/auth_phonenum_page.dart';
@@ -32,20 +33,22 @@ import '../utils/auth_helper.dart';
 const Color safeTgray=Color(0xFFA1A1A1);
 
 Future<void> main() async {
-  AuthRepository.initialize(appKey: 'aa9fefc3e4785e9135414b7455921e03');
+  AuthRepository.initialize(appKey: '0fb225459d4b8c516f20ff340eceb313');
   WidgetsFlutterBinding.ensureInitialized();
   
   // 카메라 초기화
   final cameras = await availableCameras();
-  final firstCamera = cameras.first;
+  final frontCamera = cameras.firstWhere((camera) => camera.lensDirection == CameraLensDirection.front);
+  final backCamera = cameras.firstWhere((camera) => camera.lensDirection == CameraLensDirection.back);
 
-  runApp(MyApp(camera: firstCamera));
+  runApp(MyApp(frontCamera: frontCamera, backCamera: backCamera));
 }
 
 class MyApp extends StatelessWidget {
-  final CameraDescription camera;
+  final CameraDescription frontCamera;
+  final CameraDescription backCamera;
 
-  MyApp({required this.camera});
+  MyApp({required this.frontCamera, required this.backCamera});
 
   @override
   Widget build(BuildContext context) {
@@ -56,19 +59,18 @@ class MyApp extends StatelessWidget {
       ),
       home: SplashPage(),
       routes: {
-        '/agreement':(context) => AgreementPage(),
-        '/alarm':(context) => AlarmPage(),
+        '/agreement': (context) => AgreementPage(),
+        '/alarm': (context) => AlarmPage(),
         '/announcement': (context) => AnnouncementPage(),
-        '/auth_done':(context) => AuthDonePage(),
-        '/auth_face_how':(context) => FaceHowPage(),
-        '/auth_face_cam':(context) => FaceCamPage(camera: camera),
-        '/auth_id_cam':(context) => IdCamPage(camera: camera),
-        '/auth_id_how':(context) => IdHowPage(),
-        '/auth_idinfo':(context) => IdInfoCheckPage(),
+        '/auth_done': (context) => AuthDonePage(),
+        '/auth_face_cam': (context) => FaceCamPage(camera: frontCamera),
+        '/auth_face_how': (context) => FaceHowPage(),
+        '/auth_id_cam': (context) => IdCamPage(camera: backCamera),
+        '/auth_id_how': (context) => IdHowPage(),
+        '/auth_idinfo': (context) => IdInfoCheckPage(recognizedLines: []),
         '/auth': (context) => AuthPage(),
-        '/auth_phonenumber':(context) => PhoneNumberInputPage(),
+        '/auth_phonenumber': (context) => PhoneNumberInputPage(),
         '/home': (context) => HomePage(),
-        '/lock':(context) => LockedPage(),
         '/login': (context) => LoginPage(),
         '/map': (context) => MapPage(),
         '/profile': (context) => ProfilePage(),

@@ -33,7 +33,9 @@ dependencies:
   shared_preferences: ^2.0.9  # 로그인된 여부 저장
   camera: ^0.10.0+1 # 카메라
   kakao_map_plugin: ^0.2.5
-  geolocator: ^7.0.3 #현위치 알아내는거
+  geolocator: ^7.0.3 # 현위치 알아내는거
+  google_ml_kit: ^0.7.0 # ocr
+  
 
 
   # The following adds the Cupertino Icons font to your application.

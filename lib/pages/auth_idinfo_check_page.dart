@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:safet/main.dart';
 
+
 class IdInfoCheckPage extends StatelessWidget {
+  final List<String> recognizedLines;
+
+  IdInfoCheckPage({required this.recognizedLines});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +15,7 @@ class IdInfoCheckPage extends StatelessWidget {
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.close,color: safeTgray),
+            icon: Icon(Icons.close, color: Colors.grey),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -27,7 +32,17 @@ class IdInfoCheckPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16),
             ),
-            Spacer(),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: recognizedLines.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(recognizedLines[index]),
+                  );
+                },
+              ),
+            ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,
@@ -37,7 +52,6 @@ class IdInfoCheckPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                // Next button action
                 Navigator.pushNamed(context, '/auth_face_how');
               },
               child: Text(
