@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.safet">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    
    <application
         android:label="safet"
         android:name="${applicationName}"

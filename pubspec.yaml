@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^2.0.9  # 로그인된 여부 저장
+  qr_code_scanner: ^0.4.0  # QR 코드 스캐너 패키지 추가
+
 
 
 

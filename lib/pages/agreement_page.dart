@@ -70,7 +70,7 @@ class _AgreementPageState extends State<AgreementPage> {
                     }
                   : null,
               style: ElevatedButton.styleFrom(
-                primary: Colors.lightGreen,
+               // primary: Colors.lightGreen,
                 minimumSize: Size(double.infinity, 50),
               ),
               child: Text('동의하고 진행'),

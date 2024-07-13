@@ -13,6 +13,10 @@ import 'pages/profile_page.dart';
 import 'pages/rent_page.dart';
 import 'pages/return_page.dart';
 import 'pages/splash_page.dart';
+import 'pages/payment_page.dart';
+import 'pages/number_input_page.dart';
+import 'pages/qr_scanner_page.dart';
+import 'pages/identification_page.dart';
 
 import '../utils/auth_helper.dart';
 
@@ -41,6 +45,10 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => ProfilePage(),
         '/rent': (context) => RentPage(),
         '/return': (context) => ReturnPage(),
+        '/payment': (context) => PaymentPage(),
+        '/qr': (context) => QrScannerPage(),
+        '/number': (context) => NumberInputPage(),
+        '/identification': (context) => IdentificationPage(),
       },
     );
   }
