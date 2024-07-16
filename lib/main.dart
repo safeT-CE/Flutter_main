@@ -30,7 +30,10 @@ import 'pages/splash_page.dart';
 import '../utils/auth_helper.dart';
 
 //색상 선언
+const Color safeTblack=Color(0xFF1A1A1A);
 const Color safeTgray=Color(0xFFA1A1A1);
+const Color safeTgreen=Color(0xFFAFD08F);
+const Color safeTlightgreen=Color(0xFFE7F1DE);
 
 Future<void> main() async {
   AuthRepository.initialize(appKey: '0fb225459d4b8c516f20ff340eceb313');
