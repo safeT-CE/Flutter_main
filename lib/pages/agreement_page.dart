@@ -46,75 +46,102 @@ class _AgreementPageState extends State<AgreementPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('약관에 동의해 주세요.'),
-        centerTitle: true, // title 중앙정렬
-        automaticallyImplyLeading: false, // 뒤로 가기 버튼 제거
-        actions:[
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
+    return Theme(
+      data: Theme.of(context).copyWith(
+        unselectedWidgetColor: safeTlightgreen, // 기본 색상 설정
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CheckboxListTile(
-              title: Text('약관 전체 동의'),
-              value: _allAgree,
-              onChanged: (bool? value) {
-                setState(() {
-                  _allAgree = value!;
-                  for (int i = 0; i < _agreeList.length; i++) {
-                    _agreeList[i] = _allAgree;
-                  }
-                });
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            '약관에 동의해 주세요.',
+            style: TextStyle(color: safeTblack),
+          ),
+          centerTitle: true, // title 중앙정렬
+          automaticallyImplyLeading: false, // 뒤로 가기 버튼 제거
+          backgroundColor: Colors.white,
+          elevation: 0, // 그림자 제거
+          actions: [
+            IconButton(
+              icon: Icon(Icons.close, color: safeTgray),
+              onPressed: () {
+                Navigator.pop(context);
               },
             ),
-            Divider(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _agreeList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text(_agreeTitles[index]),
-                    trailing: Checkbox(
-                      value: _agreeList[index],
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _agreeList[index] = value!;
-                          _allAgree = _agreeList.every((bool agree) => agree);
-                        });
-                      },
-                    ),
-                    onTap: () {
-                      _navigateToDetailPage(index);
-                    },
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _agreeList.every((bool agree) => agree)
-                  ? () {
-                      // 다음 페이지로 이동 또는 약관 동의 처리
-                      Navigator.pushNamed(context, '/auth_phonenumber');
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                primary: Colors.lightGreen,
-                minimumSize: Size(double.infinity, 50),
-              ),
-              child: Text('동의하고 진행'),
-            ),
           ],
+        ),
+        backgroundColor: Colors.white, // Scaffold 배경색 흰색으로 설정
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Checkbox(
+                    value: _allAgree,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _allAgree = value!;
+                        for (int i = 0; i < _agreeList.length; i++) {
+                          _agreeList[i] = _allAgree;
+                        }
+                      });
+                    },
+                    activeColor: safeTgreen,
+                    checkColor: Colors.white,
+                  ),
+                  Text('약관 전체 동의'),
+                ],
+              ),
+              Divider(),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _agreeList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      leading: Checkbox(
+                        value: _agreeList[index],
+                        onChanged: (bool? value) {
+                          setState(() {
+                            _agreeList[index] = value!;
+                            _allAgree = _agreeList.every((bool agree) => agree);
+                          });
+                        },
+                        activeColor: safeTgreen,
+                        checkColor: Colors.white,
+                      ),
+                      title: Text(_agreeTitles[index]),
+                      trailing: Icon(Icons.arrow_forward_ios, color: safeTlightgreen),
+                      onTap: () {
+                        _navigateToDetailPage(index);
+                      },
+                    );
+                  },
+                ),
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _agreeList.every((bool agree) => agree)
+                    ? () {
+                        // 다음 페이지로 이동 또는 약관 동의 처리
+                        Navigator.pushNamed(context, '/auth_phonenumber');
+                      }
+                    : null,
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.disabled)) {
+                        return safeTlightgreen; // 비활성화 상태의 색상 설정
+                      }
+                      return safeTgreen; // 기본 상태의 색상 설정
+                    },
+                  ),
+                  minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 50)),
+                ),
+                child: Text('동의하고 진행'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -133,11 +160,11 @@ class AgreementDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           title,
-          style: TextStyle(color: safeTgray), // Set title color here
+          style: TextStyle(color: safeTblack), // Set title color here
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 0, // 그림자 제거
         actions: [
           IconButton(
             icon: Icon(Icons.close, color: safeTgray),
@@ -147,6 +174,7 @@ class AgreementDetailPage extends StatelessWidget {
           ),
         ],
       ),
+      backgroundColor: Colors.white, // Scaffold 배경색 흰색으로 설정
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(content),
