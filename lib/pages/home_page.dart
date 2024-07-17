@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
                       Navigator.pushNamed(context, '/rent');
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.lightGreen[100],
+                      //primary: Colors.lightGreen[100],
                     ),
                     child: Text('대여하기'),
                   ),
@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                       Navigator.pushNamed(context, '/return');
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.lightGreen[100],
+                      //primary: Colors.lightGreen[100],
                     ),
                     child: Text('반납하기'),
                   ),

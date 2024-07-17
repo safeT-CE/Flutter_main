@@ -177,7 +177,7 @@ class AgreementDetailPage extends StatelessWidget {
       backgroundColor: Colors.white, // Scaffold 배경색 흰색으로 설정
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Text(content),
+
       ),
     );
   }
