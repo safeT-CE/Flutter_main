@@ -54,6 +54,7 @@ class _FaceCamPageState extends State<FaceCamPage> {
             child: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
+              automaticallyImplyLeading: false,
               actions: [
                 IconButton(
                   icon: Icon(Icons.close, color: Colors.white),
@@ -73,7 +74,7 @@ class _FaceCamPageState extends State<FaceCamPage> {
                 Text(
                   '얼굴을 영역 안에 맞추고\n촬영해 주세요.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 SizedBox(height: 30),
                 Container(
@@ -93,7 +94,7 @@ class _FaceCamPageState extends State<FaceCamPage> {
             right: 16,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.green,
+                primary: safeTgreen,
                 minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -104,18 +105,29 @@ class _FaceCamPageState extends State<FaceCamPage> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text("신분증 소지자와 동일인 입니다"),
+                      contentPadding: EdgeInsets.all(16),
+                      title: Padding(
+                        padding: EdgeInsets.only(top: 16), // Title 위에 여백 추가
+                        child: Text(
+                          "신분증 소지자와 동일인 입니다",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
                       actions: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context); // Close the dialog
-                            Navigator.pushNamed(context, '/auth_done');
-                          },
-                          child: Text('OK'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context); // Close the dialog
+                              Navigator.pushNamed(context, '/auth_done');
+                            },
+                            child: Text('OK'),
+                            style: ElevatedButton.styleFrom(
+                              primary: safeTgreen,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                             ),
                           ),
                         ),

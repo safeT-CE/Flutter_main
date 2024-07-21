@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:safet/main.dart';
-import 'package:safet/main.dart';
 
 class FaceHowPage extends StatelessWidget {
   @override
@@ -18,25 +17,29 @@ class FaceHowPage extends StatelessWidget {
           ),
         ],
       ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '신분증 사진과 비교하여 본인 여부를 확인합니다.',
+              '신분증 사진과 비교하여 \n본인 여부를 확인합니다.',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 50),
             Image.asset(
               'assets/image/auth_selfie.png', 
               width: 200,
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 50),
             Container(
               padding: EdgeInsets.all(16),
-              color: Color(0xFFFFE4E1), // 배경색 핑크색
+              decoration: BoxDecoration(
+                color: Color(0xFFF0B0B0),
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Row(
                 children: [
                   Icon(Icons.lightbulb_outline, color: Colors.yellow),
@@ -53,12 +56,9 @@ class FaceHowPage extends StatelessWidget {
             Spacer(),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.green,
-                minimumSize: Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
+            backgroundColor: safeTgreen,
+            minimumSize: Size(double.infinity, 50),
+            ),
               onPressed: () {
                 // Next button action
                 Navigator.pushNamed(context, '/auth_face_cam');

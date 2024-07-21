@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:safet/pages/auth_idinfo_check_page.dart';
+import 'package:safet/main.dart';
+import 'dart:async';
 
 class IdCamPage extends StatefulWidget {
   final CameraDescription camera;
@@ -17,6 +19,9 @@ class _IdCamPageState extends State<IdCamPage> {
   late Future<void> _initializeControllerFuture;
   final textDetector = GoogleMlKit.vision.textDetector();
   List<String> _recognizedLines = [];
+  bool _showWarning = false;
+  Timer? _warningTimer;
+  Timer? _focusTimer;
 
   @override
   void initState() {
@@ -25,14 +30,26 @@ class _IdCamPageState extends State<IdCamPage> {
       widget.camera,
       ResolutionPreset.high,
     );
+    _initializeControllerFuture = _controller.initialize().then((_) {
+      _controller.setFocusMode(FocusMode.auto);
+      _startFocusTimer();
+    });
+  }
 
-    _initializeControllerFuture = _controller.initialize();
+  void _startFocusTimer() {
+    _focusTimer = Timer.periodic(Duration(seconds: 5), (timer) {
+      if (_controller.value.isInitialized) {
+        _controller.setFocusPoint(null);  // 포커스를 재조정하기 위해 초점 재설정
+      }
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
     textDetector.close();
+    _warningTimer?.cancel();
+    _focusTimer?.cancel();
     super.dispose();
   }
 
@@ -43,14 +60,10 @@ class _IdCamPageState extends State<IdCamPage> {
       final inputImage = InputImage.fromFilePath(image.path);
       final RecognisedText recognisedText = await textDetector.processImage(inputImage);
 
-      List<String> recognizedLines = [];
-
-      for (TextBlock block in recognisedText.blocks) {
-        for (TextLine line in block.lines) {
-          final text = line.text.trim();
-          recognizedLines.add(text);
-        }
-      }
+      List<String> recognizedLines = recognisedText.blocks
+          .expand((block) => block.lines)
+          .map((line) => line.text.trim())
+          .toList();
 
       setState(() {
         _recognizedLines = recognizedLines;
@@ -64,17 +77,27 @@ class _IdCamPageState extends State<IdCamPage> {
           ),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('텍스트를 인식하지 못했습니다. 다시 시도해주세요.')),
-        );
+        _showWarningMessage();
       }
-
     } catch (e) {
       print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('오류가 발생했습니다. 다시 시도해주세요.')),
-      );
+      _showWarningMessage();
     }
+  }
+
+  void _showWarningMessage() {
+    setState(() {
+      _showWarning = true;
+    });
+
+    _warningTimer?.cancel();
+    _warningTimer = Timer(Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          _showWarning = false;
+        });
+      }
+    });
   }
 
   @override
@@ -99,9 +122,10 @@ class _IdCamPageState extends State<IdCamPage> {
             child: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
+              automaticallyImplyLeading: false,
               actions: [
                 IconButton(
-                  icon: Icon(Icons.close, color: Colors.grey),
+                  icon: Icon(Icons.close, color: Colors.white),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -118,7 +142,7 @@ class _IdCamPageState extends State<IdCamPage> {
                 Text(
                   '신분증을 영역 안에 맞추고\n촬영해 주세요.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 SizedBox(height: 30),
                 Container(
@@ -141,19 +165,22 @@ class _IdCamPageState extends State<IdCamPage> {
             ),
           ),
           Positioned(
-            bottom: 150,
+            bottom: 200,
             left: 16,
             right: 16,
             child: Container(
               padding: EdgeInsets.all(16),
-              color: Color(0xFFFFE4E1),
+              decoration: BoxDecoration(
+                color: Color(0xFFF0B0B0),
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Row(
                 children: [
                   Icon(Icons.lightbulb_outline, color: Colors.yellow),
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      '신분증에 빛이 반사되지 않도록 영역안에\n조절하여 주세요.',
+                      '신분증에 빛이 반사되지 않도록 영역 안에\n조절하여 주세요.',
                       style: TextStyle(fontSize: 14),
                     ),
                   ),
@@ -161,17 +188,39 @@ class _IdCamPageState extends State<IdCamPage> {
               ),
             ),
           ),
+          if (_showWarning)
+            Positioned(
+              bottom: 150,
+              left: 16,
+              right: 16,
+              child: Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.warning, color: Colors.white),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        '텍스트를 인식하지 못했습니다.\n다시 시도해주세요.',
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           Positioned(
-            bottom: 50,
+            bottom: 16,
             left: 16,
             right: 16,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.green,
+                backgroundColor: safeTgreen,
                 minimumSize: Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
               ),
               onPressed: _processImage,
               child: Text(
