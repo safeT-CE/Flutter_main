@@ -218,7 +218,7 @@ class _IdCamPageState extends State<IdCamPage> {
           ),
           if (_showWarning)
             Positioned(
-              bottom: 150,
+              bottom: 120,
               left: 16,
               right: 16,
               child: Container(
