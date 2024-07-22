@@ -1,5 +1,6 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
+import 'package:safet/models/user_info.dart';
 import 'package:safet/main.dart';
 
 class FaceCamPage extends StatefulWidget {
@@ -34,6 +35,11 @@ class _FaceCamPageState extends State<FaceCamPage> {
 
   @override
   Widget build(BuildContext context) {
+    final UserInfo userInfo = ModalRoute.of(context)!.settings.arguments as UserInfo;
+
+    // 디버깅 메시지 출력
+    print('FaceCamPage - UserInfo received: ${userInfo.toString()}');
+
     return Scaffold(
       body: Stack(
         children: [
@@ -94,7 +100,7 @@ class _FaceCamPageState extends State<FaceCamPage> {
             right: 16,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: safeTgreen,
+                backgroundColor: safeTgreen,
                 minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -107,7 +113,7 @@ class _FaceCamPageState extends State<FaceCamPage> {
                     return AlertDialog(
                       contentPadding: EdgeInsets.all(16),
                       title: Padding(
-                        padding: EdgeInsets.only(top: 16), // Title 위에 여백 추가
+                        padding: EdgeInsets.only(top: 16),
                         child: Text(
                           "신분증 소지자와 동일인 입니다",
                           textAlign: TextAlign.center,
@@ -120,11 +126,15 @@ class _FaceCamPageState extends State<FaceCamPage> {
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.pop(context); // Close the dialog
-                              Navigator.pushNamed(context, '/auth_done');
+                              Navigator.pushNamed(
+                                context,
+                                '/auth_done',
+                                arguments: userInfo, // 전달할 UserInfo 객체 추가
+                              );
                             },
                             child: Text('OK'),
                             style: ElevatedButton.styleFrom(
-                              primary: safeTgreen,
+                              backgroundColor: safeTgreen,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),

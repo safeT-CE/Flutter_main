@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:safet/main.dart';
+import 'package:safet/models/user_info.dart';
 
 class FaceHowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final UserInfo userInfo = ModalRoute.of(context)!.settings.arguments as UserInfo;
+
+    // 디버깅 메시지 출력
+    print('FaceHowPage - UserInfo received: ${userInfo.toString()}');
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -56,12 +62,16 @@ class FaceHowPage extends StatelessWidget {
             Spacer(),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-            backgroundColor: safeTgreen,
-            minimumSize: Size(double.infinity, 50),
-            ),
+                backgroundColor: safeTgreen,
+                minimumSize: Size(double.infinity, 50),
+              ),
               onPressed: () {
                 // Next button action
-                Navigator.pushNamed(context, '/auth_face_cam');
+                Navigator.pushNamed(
+                  context, 
+                  '/auth_face_cam',
+                  arguments: userInfo, // 전달할 UserInfo 객체 추가
+                );
               },
               child: Text(
                 '다음',
