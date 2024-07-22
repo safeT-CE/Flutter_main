@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:safet/main.dart';
 
 class AuthPage extends StatelessWidget {
   Future<void> _login(BuildContext context) async {
@@ -31,7 +32,7 @@ class AuthPage extends StatelessWidget {
                 Navigator.pushNamed(context, '/login');
               },
               style: ElevatedButton.styleFrom(
-               // primary: Colors.lightGreen[100],
+                backgroundColor: safeTgreen, 
               ),
               child: Text('로그인'),
             ),
@@ -41,7 +42,7 @@ class AuthPage extends StatelessWidget {
                 Navigator.pushNamed(context, '/agreement');
               },
               style: ElevatedButton.styleFrom(
-                //primary: Colors.lightGreen[100],
+                backgroundColor: safeTgreen, 
               ),
               child: Text('회원가입'),
             ),

@@ -23,6 +23,10 @@ class _IdCamPageState extends State<IdCamPage> {
   Timer? _warningTimer;
   Timer? _focusTimer;
 
+  String? dateOfIssue;
+  String? dateOfBirth;
+  String? licenseNumber;
+
   @override
   void initState() {
     super.initState();
@@ -70,10 +74,16 @@ class _IdCamPageState extends State<IdCamPage> {
       });
 
       if (_recognizedLines.isNotEmpty) {
+        _extractInfo(_recognizedLines);
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => IdInfoCheckPage(recognizedLines: _recognizedLines),
+            builder: (context) => IdInfoCheckPage(
+              dateOfIssue: dateOfIssue,
+              dateOfBirth: dateOfBirth,
+              licenseNumber: licenseNumber,
+              recognizedLines: _recognizedLines,
+            ),
           ),
         );
       } else {
@@ -82,6 +92,24 @@ class _IdCamPageState extends State<IdCamPage> {
     } catch (e) {
       print(e);
       _showWarningMessage();
+    }
+  }
+
+  void _extractInfo(List<String> lines) {
+    RegExp dateRegExp = RegExp(r'\d{4}\.\d{2}\.\d{2}');
+    RegExp idRegExp = RegExp(r'\d{6}-\d{7}');
+    RegExp licenseRegExp = RegExp(r'\d{2}-\d{2}-\d{6}-\d{2}');
+
+    for (var line in lines) {
+      if (dateRegExp.hasMatch(line)) {
+        dateOfIssue = dateRegExp.stringMatch(line);
+      }
+      if (idRegExp.hasMatch(line)) {
+        dateOfBirth = idRegExp.stringMatch(line)?.substring(0, 6);
+      }
+      if (licenseRegExp.hasMatch(line)) {
+        licenseNumber = licenseRegExp.stringMatch(line);
+      }
     }
   }
 
