@@ -24,7 +24,7 @@ class LockedPage extends StatelessWidget {
           children: [
             SizedBox(height: 30),
             Image.asset(
-              'assets/image/auth_idcard.png', 
+              'assets/image/locked.png', 
               width: 200,
             ),
             SizedBox(height: 30),

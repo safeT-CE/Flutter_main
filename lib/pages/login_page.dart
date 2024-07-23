@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/auth_helper.dart';
+import 'package:safet/main.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            //Image.asset('assets/image/logo.png', height: 150),
+            // Image.asset('assets/image/logo.png', height: 150),
             SizedBox(height: 16),
             Text(
               'LOGIN',
@@ -35,42 +36,63 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.grey,
+                color: safeTgray,
               ),
             ),
             SizedBox(height: 32),
             TextField(
               controller: _phoneController,
               decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.lightGreen[100],
                 hintText: '01012345678',
+                filled: false,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(
+                    color: safeTlightgreen, // 테두리 색상 설정
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: safeTlightgreen, // 활성 상태의 테두리 색상 설정
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: safeTlightgreen, // 포커스 상태의 테두리 색상 설정
+                  ),
                 ),
               ),
               keyboardType: TextInputType.phone,
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 4),
             Row(
               children: [
-                Checkbox(
-                  value: _autoLogin,
-                  onChanged: (value) {
-                    setState(() {
-                      _autoLogin = value!;
-                    });
-                  },
+                Theme(
+                  data: ThemeData(
+                    unselectedWidgetColor: safeTlightgreen, // 체크되지 않은 상태의 색상 설정
+                  ),
+                  child: Checkbox(
+                    value: _autoLogin,
+                    onChanged: (value) {
+                      setState(() {
+                        _autoLogin = value!;
+                      });
+                    },
+                    activeColor: safeTlightgreen, // 체크된 상태의 색상 설정
+                  ),
                 ),
                 Text('자동 로그인'),
               ],
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _login,
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
               style: ElevatedButton.styleFrom(
-                //primary: Colors.lightGreen[100],
+                backgroundColor: safeTgreen,
               ),
               child: Text('로그인'),
             ),
@@ -78,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
             Text(
               'or continue with',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(color: safeTgray),
             ),
             SizedBox(height: 16),
             // Row(
