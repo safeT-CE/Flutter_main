@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
 
-class NumberInputPage extends StatelessWidget {
+class NumberInputPage extends StatefulWidget {
+  final VoidCallback onNumberEntered;
+
+  NumberInputPage({required this.onNumberEntered});
+
+  @override
+  _NumberInputPageState createState() => _NumberInputPageState();
+}
+
+class _NumberInputPageState extends State<NumberInputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('번호 직접 입력'),
+        title: Text('번호 입력'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: '직접 번호를 입력하세요',
+                labelText: '번호를 입력하세요',
               ),
             ),
             ElevatedButton(
               onPressed: () {
-                // 번호 입력 확인
+                widget.onNumberEntered();
               },
               child: Text('확인'),
             ),

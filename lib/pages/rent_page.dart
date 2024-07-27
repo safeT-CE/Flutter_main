@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'payment_page.dart';
-import 'qr_scanner_page.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+import 'face_recognition_page.dart';
 import 'number_input_page.dart';
-import 'identification_page.dart';
 
 class RentPage extends StatefulWidget {
   @override
@@ -10,7 +10,9 @@ class RentPage extends StatefulWidget {
 }
 
 class _RentPageState extends State<RentPage> {
-  bool hasPaymentMethod = false; // 예시로 결제 수단 유무를 판단하는 플래그
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  Barcode? result;
+  QRViewController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +24,12 @@ class _RentPageState extends State<RentPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // QR 인식 네모 칸
-            Container(
-              width: 200,
-              height: 200,
-              color: Colors.grey,
-              child: Center(child: Text('QR 인식 칸')),
+            Expanded(
+              flex: 5,
+              child: QRView(
+                key: qrKey,
+                onQRViewCreated: _onQRViewCreated,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +42,23 @@ class _RentPageState extends State<RentPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => NumberInputPage()),
+                      MaterialPageRoute(
+                        builder: (context) => NumberInputPage(
+                          onNumberEntered: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FaceRecognitionPage(
+                                  onFaceRecognized: () {
+                                    Navigator.pop(context); // 얼굴 인식 페이지 닫기
+                                    _showBatteryPopup(context); // 배터리 팝업 표시
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     );
                   },
                   child: Icon(Icons.dialpad),
@@ -52,64 +70,62 @@ class _RentPageState extends State<RentPage> {
                     padding: EdgeInsets.all(20),
                   ),
                   onPressed: () {
-                    // 라이트 켜기 기능
+                    if (controller != null) {
+                      controller?.toggleFlash();
+                    }
                   },
                   child: Icon(Icons.flashlight_on),
                 ),
               ],
             ),
-            
-            //qr인식 연결되면 지우기
             ElevatedButton(
-              onPressed: () {
-                if (!hasPaymentMethod) {
-                  _showNoPaymentMethodPopup(context);
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => QrScannerPage()),
-                  ).then((isIdentified) {
-                    if (isIdentified != null && isIdentified) {
-                      _showBatteryPopup(context);
-                    }
-                  });
+              onPressed: () async {
+                if (result != null) {
+                  _navigateToFaceRecognition(context);
                 }
               },
               child: Text('QR 인식 시작'),
             ),
-            //여기까지
-            
           ],
         ),
       ),
     );
   }
 
-  void _showNoPaymentMethodPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('결제 수단 없음'),
-          content: Text('등록된 결제 수단이 없습니다. 결제 수단을 등록하시겠습니까?'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('취소'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, '/payment');
-              },
-              child: Text('결제 수단 등록'),
-            ),
-          ],
-        );
-      },
+  void _onQRViewCreated(QRViewController controller) {
+    setState(() {
+      this.controller = controller;
+    });
+
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        result = scanData;
+      });
+
+      if (result != null) {
+        _navigateToFaceRecognition(context);
+      }
+    });
+  }
+
+  void _navigateToFaceRecognition(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FaceRecognitionPage(
+          onFaceRecognized: () {
+            Navigator.pop(context); // 얼굴 인식 페이지 닫기
+            _showBatteryPopup(context); // 배터리 팝업 표시
+          },
+        ),
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
   }
 
   void _showBatteryPopup(BuildContext context) {
@@ -150,12 +166,13 @@ class _RentPageState extends State<RentPage> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/home'); // 홈으로 이동
               },
               child: Text('확인'),
             ),
           ],
         );
-      },
+      }
     );
   }
 }
