@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:safet/pages/agreement_page.dart';
 import 'package:safet/pages/auth_number_page.dart';
 import 'package:safet/pages/payment_selection_page.dart';
+import 'package:safet/pages/theme_provider.dart';
 
 import 'pages/alarm_page.dart';
 import 'pages/announcement_page.dart';
@@ -21,8 +22,11 @@ import 'pages/splash_page.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => InquiryData(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => InquiryData()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ],
       child: MyApp(),
     ),
   );
@@ -31,11 +35,11 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       title: 'SafeT',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
+      theme: themeProvider.isDarkMode ? ThemeData.dark() : ThemeData.light(),
       home: SplashPage(),
       routes: {
         '/agreement': (context) => AgreementPage(),
@@ -50,7 +54,7 @@ class MyApp extends StatelessWidget {
         '/rent': (context) => RentPage(),
         '/return': (context) => ReturnPage(),
         '/payment': (context) => PaymentSelectionPage(),
-        '/number': (context) => NumberInputPage(onNumberEntered: () {  },),
+        '/number': (context) => NumberInputPage(onNumberEntered: () {}),
         '/identification': (context) => IdentificationPage(),
         '/ask': (context) => AskPage(),
       },

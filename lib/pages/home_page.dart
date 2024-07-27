@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'alarm_page.dart';
-import 'announcement_page.dart';
-import 'profile_page.dart';
-import 'rent_page.dart';
-import 'return_page.dart';
-import 'map_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -39,7 +33,7 @@ class HomePage extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(8.0),
                 color: Colors.lightGreen[100],
-                child: Text('공지사항어쩌구버쩌구살라살라'),
+                child: Text('공지사항'),
               ),
             ),
             SizedBox(height: 16),
