@@ -42,6 +42,7 @@ const Color safeTgreen = Color(0xFFAFD08F);
 const Color safeTlightgreen = Color(0xFFE7F1DE);
 
 Future<void> main() async {
+  AuthRepository.initialize(appKey: '0fb225459d4b8c516f20ff340eceb313');
   WidgetsFlutterBinding.ensureInitialized();
   
   // 카메라 초기화
