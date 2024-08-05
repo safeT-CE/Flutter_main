@@ -8,7 +8,6 @@ import 'package:safet/pages/auth_done_page.dart';
 import 'package:safet/pages/auth_face_cam_page.dart';
 import 'package:safet/pages/auth_phonenum_page.dart';
 
-import 'pages/agreement_page.dart';
 import 'pages/alarm_page.dart';
 import 'pages/announcement_page.dart';
 import 'pages/ask_page.dart';
@@ -19,8 +18,6 @@ import 'pages/auth_idcard_cam_page.dart';
 import 'pages/auth_idcard_how_page.dart';
 import 'pages/auth_idinfo_check_page.dart';
 import 'pages/auth_page.dart';
-import 'pages/auth_phonenum_page.dart';
-import 'pages/auth_phonenum_verificate_page.dart';
 import 'pages/home_page.dart';
 import 'pages/identification_page.dart';
 import 'pages/inquiry_data.dart';
@@ -45,7 +42,6 @@ const Color safeTgreen = Color(0xFFAFD08F);
 const Color safeTlightgreen = Color(0xFFE7F1DE);
 
 Future<void> main() async {
-  AuthRepository.initialize(appKey: '0fb225459d4b8c516f20ff340eceb313');
   WidgetsFlutterBinding.ensureInitialized();
   
   // 카메라 초기화

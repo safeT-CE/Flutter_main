@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:safet/main.dart';
 
-import 'alarm_page.dart';
-import 'announcement_page.dart';
-import 'profile_page.dart';
-import 'rent_page.dart';
-import 'return_page.dart';
-import 'map_page.dart';
-
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:safet/pages/auth_idinfo_check_page.dart';
-import 'package:safet/main.dart';
 import 'dart:async';
+
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:safet/main.dart';
+import 'package:safet/pages/auth_idinfo_check_page.dart';
 
 class IdCamPage extends StatefulWidget {
   final CameraDescription camera;
@@ -17,7 +18,7 @@ class IdCamPage extends StatefulWidget {
 class _IdCamPageState extends State<IdCamPage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-  final textDetector = GoogleMlKit.vision.textDetector();
+  final textRecognizer = GoogleMlKit.vision.textRecognizer();
   List<String> _recognizedLines = [];
   bool _showWarning = false;
   Timer? _warningTimer;
@@ -51,7 +52,7 @@ class _IdCamPageState extends State<IdCamPage> {
   @override
   void dispose() {
     _controller.dispose();
-    textDetector.close();
+    textRecognizer.close();
     _warningTimer?.cancel();
     _focusTimer?.cancel();
     super.dispose();
@@ -62,9 +63,9 @@ class _IdCamPageState extends State<IdCamPage> {
       await _initializeControllerFuture;
       final image = await _controller.takePicture();
       final inputImage = InputImage.fromFilePath(image.path);
-      final RecognisedText recognisedText = await textDetector.processImage(inputImage);
+      final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
 
-      List<String> recognizedLines = recognisedText.blocks
+      List<String> recognizedLines = recognizedText.blocks
           .expand((block) => block.lines)
           .map((line) => line.text.trim())
           .toList();
