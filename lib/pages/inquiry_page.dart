@@ -30,8 +30,8 @@ class InquiryPage extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => OneOnOneInquiryPage(
-                  initialCategory: '기타',  // 초기 카테고리를 '기타'로 설정
-                  initialTitle: '',         // 초기 제목을 빈 문자열로 설정
+                  initialCategory: '기타', 
+                  initialTitle: '',     
                 ),
               ),
             );

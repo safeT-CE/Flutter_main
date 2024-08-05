@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:safet/pages/violation_data.dart';
 
 import 'one_on_one_inquiry_page.dart';
+import 'violation_data.dart';
 
 class PenaltyDetailPage extends StatelessWidget {
   final ViolationItem violation;
@@ -21,7 +21,7 @@ class PenaltyDetailPage extends StatelessWidget {
           children: [
             Text('위반 날짜: ${violation.date}', style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 20),
-            Image.asset(violation.imagePath), // 로컬 파일 이미지 경로
+            Image.asset(violation.imagePath),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
@@ -31,6 +31,8 @@ class PenaltyDetailPage extends StatelessWidget {
                     builder: (context) => OneOnOneInquiryPage(
                       initialCategory: '벌점',
                       initialTitle: violation.title,
+                      fromPenaltyDate: violation.date,
+                      imagePath: violation.imagePath,
                     ),
                   ),
                 );

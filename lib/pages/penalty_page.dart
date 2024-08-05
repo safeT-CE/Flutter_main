@@ -1,41 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:safet/pages/violation_data.dart';
+import 'package:provider/provider.dart';
 
-import 'one_on_one_inquiry_page.dart';
+import 'penalty_detail_page.dart';
+import 'violation_data.dart';
 
-class PenaltyDetailPage extends StatelessWidget {
-  final ViolationItem violation;
-
-  const PenaltyDetailPage({super.key, required this.violation});
-
+class PenaltyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final violationData = Provider.of<ViolationData>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(violation.title),
+        title: Text('벌점 기록'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('위반 날짜: ${violation.date}', style: const TextStyle(fontSize: 18)),
-            const SizedBox(height: 20),
-            Image.asset(violation.imagePath),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => OneOnOneInquiryPage(
-                      initialCategory: '벌점',  // 벌점 카테고리로 설정
-                      initialTitle: violation.title,  // 벌점 항목 제목으로 설정
+            Text(
+              '벌점 내역',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: violationData.violations.length,
+                itemBuilder: (context, index) {
+                  final violation = violationData.violations[index];
+                  return Card(
+                    child: ListTile(
+                      leading: Image.asset(
+                        violation.imagePath,
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                      ),
+                      title: Text(violation.title),
+                      subtitle: Text(violation.date),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PenaltyDetailPage(violation: violation),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                );
-              },
-              child: const Text('문의하기'),
+                  );
+                },
+              ),
             ),
           ],
         ),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safet/pages/inquiry_page.dart';
 import 'package:safet/pages/theme_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/auth_helper.dart';
 import 'announcement_page.dart';
-import 'ask_page.dart';
 import 'login_page.dart';
 import 'payment_selection_page.dart';
-import 'penalty_point_page.dart';
+import 'penalty_page.dart';
 import 'ticket_purchase_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -175,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const PenaltyPointPage()),
+                    MaterialPageRoute(builder: (context) => PenaltyPage()),
                   );
                 },
               ),
@@ -195,7 +195,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const AskPage()),
+                    MaterialPageRoute(builder: (context) => InquiryPage()),
                   );
                 },
               ),
