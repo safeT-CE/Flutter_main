@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../main.dart';
 import 'inquiry_data.dart';
 
 class OneOnOneInquiryPage extends StatefulWidget {
@@ -53,7 +54,7 @@ class _OneOnOneInquiryPageState extends State<OneOnOneInquiryPage> {
         content: Text('문의가 제출되었습니다.'),
       ));
 
-      Navigator.pop(context); // 문의 제출 후 개인 문의 페이지로 이동
+      Navigator.pop(context); // 문의 제출 후 페이지 닫기
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('모든 필드를 입력해주세요.'),
@@ -65,7 +66,7 @@ class _OneOnOneInquiryPageState extends State<OneOnOneInquiryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('문의하기'),
+        title: const Text('1:1 문의하기'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -99,7 +100,11 @@ class _OneOnOneInquiryPageState extends State<OneOnOneInquiryPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submitInquiry,
-              child: const Text('1:1 문의하기'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: safeTgreen,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('제출'),
             ),
           ],
         ),

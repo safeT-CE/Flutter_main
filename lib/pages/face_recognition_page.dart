@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+
 class FaceRecognitionPage extends StatefulWidget {
   final VoidCallback onFaceRecognized;
 
@@ -55,6 +57,11 @@ class _FaceRecognitionPageState extends State<FaceRecognitionPage> {
                       onPressed: () {
                         widget.onFaceRecognized();
                       },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: safeTgreen,
+                      foregroundColor: Colors.white,
+                        ),
+
                       child: Text('인식 완료'),
                     ),
                   ),

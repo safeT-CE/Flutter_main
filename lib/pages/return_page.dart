@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+
 class ReturnPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -7,12 +9,19 @@ class ReturnPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('반납하기'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            _showReturnPopup(context);
-          },
-          child: Text('반납하기'),
+      body: Container(
+        color: safeTgreen, 
+        child: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              _showReturnPopup(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: safeTgreen,
+              foregroundColor: Colors.white,
+            ),
+            child: Text('반납하기'),
+          ),
         ),
       ),
     );
@@ -29,6 +38,9 @@ class ReturnPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop(); // 팝업 닫기
               },
+              style: TextButton.styleFrom(
+                foregroundColor: safeTgreen, // 버튼 글씨 색상 지정
+              ),
               child: Text('뒤로가기'),
             ),
             TextButton(
@@ -36,6 +48,9 @@ class ReturnPage extends StatelessWidget {
                 Navigator.of(context).pop(); // 팝업 닫기
                 _showReturnConfirmationPopup(context); // 반납 완료 팝업 표시
               },
+              style: TextButton.styleFrom(
+                foregroundColor: safeTgreen, // 버튼 글씨 색상 지정
+              ),
               child: Text('반납하기'),
             ),
           ],
@@ -57,6 +72,9 @@ class ReturnPage extends StatelessWidget {
                 Navigator.of(context).pop();
                 Navigator.pushNamed(context, '/home'); // 홈으로 이동
               },
+              style: TextButton.styleFrom(
+                foregroundColor: safeTgreen, // 버튼 글씨 색상 지정
+              ),
               child: Text('확인'),
             ),
           ],

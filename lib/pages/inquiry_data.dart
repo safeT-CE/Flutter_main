@@ -11,7 +11,7 @@ class InquiryData extends ChangeNotifier {
       category: category,
       title: title,
       content: content,
-      date: DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()),  // 날짜 형식 변경
+      date: DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()), 
       fromPenaltyDate: fromPenaltyDate,
       imagePath: imagePath,
     ));

@@ -27,3 +27,6 @@ class ThemeProvider extends ChangeNotifier {
     prefs.setBool('isDarkMode', _isDarkMode);
   }
 }
+
+
+//다크 모드 없앨거면 필요없음

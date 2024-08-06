@@ -4,6 +4,7 @@ import 'package:safet/pages/inquiry_page.dart';
 import 'package:safet/pages/theme_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../main.dart';
 import '../utils/auth_helper.dart';
 import 'announcement_page.dart';
 import 'login_page.dart';
@@ -74,6 +75,9 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              style: TextButton.styleFrom(
+                foregroundColor: safeTgreen,
+              ),
               child: const Text('취소'),
             ),
             TextButton(
@@ -85,6 +89,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
+              style: TextButton.styleFrom(
+                foregroundColor: safeTgreen,
+              ),
               child: const Text('로그아웃'),
             ),
           ],
@@ -101,6 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text('프로필'),
       ),
+      backgroundColor: safeTgreen,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -151,14 +159,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              const Divider(),
+             /* const Divider(),
               SwitchListTile(
                 title: const Text('다크모드'),
                 value: themeProvider.isDarkMode,
                 onChanged: (bool value) {
                   themeProvider.toggleTheme(value);
                 },
-              ),
+              ),*/
               const Divider(),
               ListTile(
                 title: const Text('공지사항'),
