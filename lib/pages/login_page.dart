@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/auth_helper.dart';
 import 'package:safet/main.dart';
+
+import '../utils/auth_helper.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -93,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: safeTgreen,
+                foregroundColor: Colors.white,
               ),
               child: Text('로그인'),
             ),

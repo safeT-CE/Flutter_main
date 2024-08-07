@@ -1,7 +1,13 @@
 package com.example.safet
 
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugins.GeneratedPluginRegistrant
+import kr.co.kkensu.kakao_map_plugin.KakaoMapPlugin
 
 class MainActivity: FlutterActivity() {
-    // MyBroadcastReceiver 관련 코드를 제거합니다.
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine)
+        flutterEngine.plugins.add(KakaoMapPlugin())
+    }
 }

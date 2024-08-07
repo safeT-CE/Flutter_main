@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+import '../main.dart';
 import 'face_recognition_page.dart';
 import 'number_input_page.dart';
 
@@ -38,6 +39,8 @@ class _RentPageState extends State<RentPage> {
                   style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
                     padding: EdgeInsets.all(20),
+                  backgroundColor: safeTgreen,
+                  foregroundColor: Colors.white,
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -68,6 +71,9 @@ class _RentPageState extends State<RentPage> {
                   style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
                     padding: EdgeInsets.all(20),
+                    backgroundColor: safeTgreen,
+                    foregroundColor: Colors.white,
+
                   ),
                   onPressed: () {
                     if (controller != null) {
@@ -77,14 +83,6 @@ class _RentPageState extends State<RentPage> {
                   child: Icon(Icons.flashlight_on),
                 ),
               ],
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (result != null) {
-                  _navigateToFaceRecognition(context);
-                }
-              },
-              child: Text('QR 인식 시작'),
             ),
           ],
         ),
@@ -140,6 +138,9 @@ class _RentPageState extends State<RentPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: safeTgreen,
+              ),
               child: Text('취소'),
             ),
             TextButton(
@@ -147,6 +148,9 @@ class _RentPageState extends State<RentPage> {
                 Navigator.of(context).pop();
                 _showRentalConfirmationPopup(context); // 대여 확인 팝업 표시
               },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: safeTgreen,
+              ),
               child: Text('대여하기'),
             ),
           ],
@@ -168,6 +172,9 @@ class _RentPageState extends State<RentPage> {
                 Navigator.of(context).pop();
                 Navigator.pushNamed(context, '/home'); // 홈으로 이동
               },
+              style: ElevatedButton.styleFrom(
+              foregroundColor: safeTgreen,
+              ),
               child: Text('확인'),
             ),
           ],

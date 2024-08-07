@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+
 class TicketPurchasePage extends StatefulWidget {
   const TicketPurchasePage({super.key});
 
@@ -38,7 +40,7 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: Colors.green[50],
+                color: safeTgreen,
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: Column(
@@ -58,9 +60,11 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
                 _showPaymentConfirmationPopup(context);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightGreen,
+                backgroundColor: safeTgreen,
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
+                foregroundColor: Colors.white,
               ),
+              
               child: const Text('결제하기', style: TextStyle(fontSize: 18)),
             ),
           ],
@@ -78,8 +82,8 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
         });
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: _selectedDuration == duration ? Colors.lightGreen : Colors.white,
-        foregroundColor: _selectedDuration == duration ? Colors.white : Colors.black,
+        backgroundColor: _selectedDuration == duration ? safeTgreen : Colors.white,
+        foregroundColor: _selectedDuration == duration ? Colors.white : safeTgray,
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       ),
       child: Text(duration),
@@ -99,6 +103,11 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
                 Navigator.of(context).pop();
                 Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
               },
+              
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+              ),
+
               child: const Text('확인'),
             ),
           ],
