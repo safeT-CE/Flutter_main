@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:safet/main.dart';
+
 
 class IdHowPage extends StatelessWidget {
   @override
@@ -8,6 +10,7 @@ class IdHowPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: Icon(Icons.close,color: safeTgray),

@@ -1,10 +1,10 @@
-import 'dart:async';
-
-import 'package:camera/camera.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:safet/main.dart';
 import 'package:safet/pages/auth_idinfo_check_page.dart';
+import 'package:safet/main.dart';
+import 'dart:async';
 
 class IdCamPage extends StatefulWidget {
   final CameraDescription camera;
@@ -18,7 +18,7 @@ class IdCamPage extends StatefulWidget {
 class _IdCamPageState extends State<IdCamPage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-  final textRecognizer = GoogleMlKit.vision.textRecognizer();
+  final textDetector = GoogleMlKit.vision.textDetector();
   List<String> _recognizedLines = [];
   bool _showWarning = false;
   Timer? _warningTimer;
@@ -44,7 +44,7 @@ class _IdCamPageState extends State<IdCamPage> {
   void _startFocusTimer() {
     _focusTimer = Timer.periodic(Duration(seconds: 5), (timer) {
       if (_controller.value.isInitialized) {
-        _controller.setFocusPoint(null);  // 포커스를 재조정하기 위해 초점 재설정
+        _controller.setFocusPoint(null); // 포커스를 재조정하기 위해 초점 재설정
       }
     });
   }
@@ -52,7 +52,7 @@ class _IdCamPageState extends State<IdCamPage> {
   @override
   void dispose() {
     _controller.dispose();
-    textRecognizer.close();
+    textDetector.close();
     _warningTimer?.cancel();
     _focusTimer?.cancel();
     super.dispose();
@@ -63,9 +63,9 @@ class _IdCamPageState extends State<IdCamPage> {
       await _initializeControllerFuture;
       final image = await _controller.takePicture();
       final inputImage = InputImage.fromFilePath(image.path);
-      final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
+      final RecognisedText recognisedText = await textDetector.processImage(inputImage);
 
-      List<String> recognizedLines = recognizedText.blocks
+      List<String> recognizedLines = recognisedText.blocks
           .expand((block) => block.lines)
           .map((line) => line.text.trim())
           .toList();
@@ -80,10 +80,11 @@ class _IdCamPageState extends State<IdCamPage> {
           context,
           MaterialPageRoute(
             builder: (context) => IdInfoCheckPage(
-              dateOfIssue: dateOfIssue,
-              dateOfBirth: dateOfBirth,
-              licenseNumber: licenseNumber,
               recognizedLines: _recognizedLines,
+              licenseImage: File(image.path), // 이미지 파일 전달
+              dateOfIssue: dateOfIssue,       // 발급일 데이터 전달
+              dateOfBirth: dateOfBirth,       // 생년월일 데이터 전달
+              licenseNumber: licenseNumber,   // 면허번호 데이터 전달
             ),
           ),
         );

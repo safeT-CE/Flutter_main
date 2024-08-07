@@ -1,12 +1,20 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:safet/main.dart'; 
 import 'package:safet/models/user_info.dart';
-import 'package:safet/main.dart';
+import 'package:safet/pages/auth_done_page.dart';
 
 class FaceCamPage extends StatefulWidget {
-  final CameraDescription camera;
+  final CameraDescription frontCamera;
+  final File licenseImage;
+  final UserInfo userInfo;
 
-  FaceCamPage({required this.camera});
+  FaceCamPage({
+    required this.frontCamera,
+    required this.userInfo,
+    required this.licenseImage,
+  });
 
   @override
   _FaceCamPageState createState() => _FaceCamPageState();
@@ -20,10 +28,9 @@ class _FaceCamPageState extends State<FaceCamPage> {
   void initState() {
     super.initState();
     _controller = CameraController(
-      widget.camera,
+      widget.frontCamera,
       ResolutionPreset.high,
     );
-
     _initializeControllerFuture = _controller.initialize();
   }
 
@@ -33,12 +40,30 @@ class _FaceCamPageState extends State<FaceCamPage> {
     super.dispose();
   }
 
+  Future<void> _takePicture() async {
+    try {
+      await _initializeControllerFuture;
+      final image = await _controller.takePicture();
+      final faceImage = File(image.path);
+      await _uploadImages(faceImage);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AuthDonePage(userInfo: widget.userInfo),
+        ),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _uploadImages(File faceImage) async {
+    // 이미지 업로드를 서버에 수행하거나 필요한 작업 수행
+  }
+
   @override
   Widget build(BuildContext context) {
-    final UserInfo userInfo = ModalRoute.of(context)!.settings.arguments as UserInfo;
-
-    // 디버깅 메시지 출력
-    print('FaceCamPage - UserInfo received: ${userInfo.toString()}');
+    print('FaceCamPage - UserInfo received: ${widget.userInfo.toString()}');
 
     return Scaffold(
       body: Stack(
@@ -106,46 +131,7 @@ class _FaceCamPageState extends State<FaceCamPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      contentPadding: EdgeInsets.all(16),
-                      title: Padding(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text(
-                          "신분증 소지자와 동일인 입니다",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                      actions: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context); // Close the dialog
-                              Navigator.pushNamed(
-                                context,
-                                '/auth_done',
-                                arguments: userInfo, // 전달할 UserInfo 객체 추가
-                              );
-                            },
-                            child: Text('OK'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: safeTgreen,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
+              onPressed: _takePicture,
               child: Text(
                 '다음',
                 style: TextStyle(fontSize: 18),

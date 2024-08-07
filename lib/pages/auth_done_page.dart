@@ -3,17 +3,27 @@ import 'package:safet/models/user_info.dart';
 import 'package:safet/main.dart';
 
 class AuthDonePage extends StatelessWidget {
+  final UserInfo userInfo;
+
+  AuthDonePage({
+    required this.userInfo,
+  });
+
   @override
   Widget build(BuildContext context) {
-    final UserInfo? userInfo = ModalRoute.of(context)!.settings.arguments as UserInfo?;
+    //final UserInfo? userInfo = ModalRoute.of(context)!.settings.arguments as UserInfo?;
 
     if (userInfo == null) {
       return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           title: Text('인증 실패'),
         ),
+        backgroundColor: Colors.white,
         body: Center(
-          child: Text('사용자 정보를 가져오지 못했습니다.\n회원가입을 다시 시도해주세요.'),
+          child: Text('사용자 정보를 가져오지 못했습니다.\n회원가입을 다시 시도해주세요.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
         ),
       );
     }

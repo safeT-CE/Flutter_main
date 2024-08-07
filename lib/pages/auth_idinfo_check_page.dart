@@ -1,16 +1,19 @@
-// idinfocheck.dart
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:safet/models/user_info.dart';
 import 'package:safet/main.dart';
+import 'package:safet/pages/auth_face_how_page.dart';
 
 class IdInfoCheckPage extends StatefulWidget {
   final List<String> recognizedLines;
+  final File licenseImage;
   final String? dateOfIssue;
   final String? dateOfBirth;
   final String? licenseNumber;
 
   IdInfoCheckPage({
     required this.recognizedLines,
+    required this.licenseImage,
     this.dateOfIssue,
     this.dateOfBirth,
     this.licenseNumber,
@@ -53,10 +56,16 @@ class _IdInfoCheckPageState extends State<IdInfoCheckPage> {
       dateOfIssue: _dateOfIssueController.text,
     );
 
-    Navigator.pushNamed(
+  print('Navigating to FaceHowPage with UserInfo: ${userInfo.toString()}');
+  
+    Navigator.push(
       context,
-      '/auth_face_how',
-      arguments: userInfo,
+      MaterialPageRoute(
+        builder: (context) => FaceHowPage(
+          userInfo: userInfo,
+          licenseImage: widget.licenseImage,
+        ),
+      ),
     );
   }
 
@@ -66,6 +75,7 @@ class _IdInfoCheckPageState extends State<IdInfoCheckPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: Icon(Icons.close, color: safeTgray),

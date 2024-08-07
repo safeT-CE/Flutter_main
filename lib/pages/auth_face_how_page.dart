@@ -1,22 +1,55 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:safet/main.dart';
+import 'package:camera/camera.dart';
 import 'package:safet/models/user_info.dart';
+import 'package:safet/main.dart'; // 다른 필요한 패키지들도 import
+import 'package:safet/pages/auth_face_cam_page.dart';
 
-class FaceHowPage extends StatelessWidget {
+class FaceHowPage extends StatefulWidget {
+  final UserInfo userInfo;
+  final File licenseImage;
+
+  FaceHowPage({required this.userInfo, required this.licenseImage});
+
+  @override
+  _FaceHowPageState createState() => _FaceHowPageState();
+}
+
+class _FaceHowPageState extends State<FaceHowPage> {
+  CameraDescription? firstCamera;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeCamera();
+  }
+
+  Future<void> _initializeCamera() async {
+    final cameras = await availableCameras();
+    setState(() {
+      // 첫 번째 카메라를 'firstCamera'로 설정
+      firstCamera = cameras.firstWhere(
+        (camera) => camera.lensDirection == CameraLensDirection.front,
+        orElse: () => cameras.first,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final UserInfo userInfo = ModalRoute.of(context)!.settings.arguments as UserInfo;
+    //final UserInfo userInfo = ModalRoute.of(context)!.settings.arguments as UserInfo;
 
     // 디버깅 메시지 출력
-    print('FaceHowPage - UserInfo received: ${userInfo.toString()}');
+    print('FaceHowPage - UserInfo received: ${widget.userInfo.toString()}');
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.close,color: safeTgray),
+            icon: Icon(Icons.close, color: safeTgray),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -36,7 +69,7 @@ class FaceHowPage extends StatelessWidget {
             ),
             SizedBox(height: 50),
             Image.asset(
-              'assets/image/auth_selfie.png', 
+              'assets/image/auth_selfie.png',
               width: 200,
             ),
             SizedBox(height: 50),
@@ -66,12 +99,21 @@ class FaceHowPage extends StatelessWidget {
                 minimumSize: Size(double.infinity, 50),
               ),
               onPressed: () {
-                // Next button action
-                Navigator.pushNamed(
-                  context, 
-                  '/auth_face_cam',
-                  arguments: userInfo, // 전달할 UserInfo 객체 추가
-                );
+                if (firstCamera != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FaceCamPage(
+                        frontCamera: firstCamera!, // 'frontCamera'에 'firstCamera' 전달
+                        userInfo: widget.userInfo,
+                        licenseImage: widget.licenseImage,
+                      ),
+                    ),
+                  );
+                } else {
+                  // 카메라가 초기화되지 않은 경우 처리
+                  print('카메라를 사용할 수 없습니다.');
+                }
               },
               child: Text(
                 '다음',
