@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+
 import 'package:safet/main.dart';
 
 class PhoneVerificationPage extends StatefulWidget {
@@ -12,8 +13,8 @@ class PhoneVerificationPage extends StatefulWidget {
 }
 
 class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
-  List<TextEditingController> _controllers = List.generate(6, (index) => TextEditingController());
-  List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
+  List<TextEditingController> _controllers = List.generate(4, (index) => TextEditingController());
+  List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
   Timer? _timer;
   int _start = 180;
 
@@ -52,13 +53,18 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
   }
 
   void _resendCode() {
-    // 인증 번호 다시 받는 로직을 추가
     startTimer();
+  }
+
+  void _submitCode() {
+    String code = _controllers.map((controller) => controller.text).join();
+    print('인증번호: $code');//유저가 입력한 인증 번호 터미널에 출력->추후에 백이랑 연결 했을때 비교 로직 쉽게 하고자
+    Navigator.pushNamed(context, '/auth_id_how');
   }
 
   @override
   Widget build(BuildContext context) {
-    String displayPhoneNumber = '0${widget.phoneNumber}'; // 전화번호 앞에 0 추가
+    String displayPhoneNumber = '0${widget.phoneNumber}'; 
 
     return Scaffold(
       appBar: AppBar(
@@ -69,7 +75,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.close, color: safeTgray),
+            icon: Icon(Icons.close, color: Colors.grey),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -92,7 +98,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
               Text(
                 '아래 번호로 인증 번호가 전송 되었습니다.\n인증 번호를 입력해주세요.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: safeTgray),
+                style: TextStyle(color: Colors.grey),
               ),
               SizedBox(height: 32),
               Text(
@@ -102,9 +108,9 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
               SizedBox(height: 32),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(6, (index) {
+                children: List.generate(4, (index) {
                   return Container(
-                    width: 40,
+                    width: 50,
                     child: TextField(
                       controller: _controllers[index],
                       focusNode: _focusNodes[index],
@@ -116,19 +122,19 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                         contentPadding: EdgeInsets.all(10),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: safeTlightgreen),
+                          borderSide: BorderSide(color: safeTgreen),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: safeTlightgreen),
+                          borderSide: BorderSide(color: safeTgreen),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: safeTlightgreen),
+                          borderSide: BorderSide(color: safeTgreen),
                         ),
                       ),
                       onChanged: (value) {
-                        if (value.length == 1 && index < 5) {
+                        if (value.length == 1 && index < 3) {
                           _focusNodes[index + 1].requestFocus();
                         } else if (value.isEmpty && index > 0) {
                           _focusNodes[index - 1].requestFocus();
@@ -151,7 +157,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                   child: Text(
                     '인증번호 새로 받기',
                     style: TextStyle(
-                      color: safeTgray,
+                      color: Colors.grey,
                       decoration: TextDecoration.none,
                     ),
                   ),
@@ -165,10 +171,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
-          onPressed: () {
-            // 인증 번호 확인 로직 추가
-            Navigator.pushNamed(context, '/auth_id_how');
-          },
+          onPressed: _submitCode,
           style: ElevatedButton.styleFrom(
             backgroundColor: safeTgreen,
             minimumSize: Size(double.infinity, 50),
