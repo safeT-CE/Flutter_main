@@ -41,8 +41,16 @@ class _FaceRecognitionPageState extends State<FaceRecognitionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('얼굴 인식')),
+    return Theme(
+      data: Theme.of(context).copyWith(
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('얼굴 인식'),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
       body: isCameraInitialized
           ? Column(
               children: <Widget>[
@@ -69,6 +77,7 @@ class _FaceRecognitionPageState extends State<FaceRecognitionPage> {
               ],
             )
           : Center(child: CircularProgressIndicator()), // 카메라 초기화 중에는 로딩 표시
+      )
     );
   }
 }
