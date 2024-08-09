@@ -58,7 +58,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
 
   void _submitCode() {
     String code = _controllers.map((controller) => controller.text).join();
-    print('인증번호: $code');//유저가 입력한 인증 번호 터미널에 출력->추후에 백이랑 연결 했을때 비교 로직 쉽게 하고자
+    print('인증번호: $code');//유저가 입력한 인증 번호 터미널에 출력->추후에 백이랑 연결 했을때 비교에 이용
     Navigator.pushNamed(context, '/auth_id_how');
   }
 
