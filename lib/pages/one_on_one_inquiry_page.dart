@@ -64,49 +64,87 @@ class _OneOnOneInquiryPageState extends State<OneOnOneInquiryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('1:1 문의하기'),
+    return Theme(
+      data: Theme.of(context).copyWith(
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: safeTgreen, // 기본 테마 색상을 safeTgreen으로 설정
+            ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: safeTgreen, // 커서 색상
+          selectionColor: safeTgreen.withOpacity(0.5), // 텍스트 선택 색상
+          selectionHandleColor: safeTgreen, // 핸들 색상 (드래그할 때 나타나는 손잡이)
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            DropdownButtonFormField<String>(
-              decoration: const InputDecoration(labelText: '문의 분류'),
-              items: ['기타', '결제', '벌점', '회원정보'].map((category) {
-                return DropdownMenuItem(
-                  value: category,
-                  child: Text(category),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedCategory = value!;
-                });
-              },
-              value: selectedCategory,
-            ),
-            TextFormField(
-              controller: _titleController,
-              decoration: const InputDecoration(labelText: '제목을 입력해주세요'),
-            ),
-            TextFormField(
-              controller: _contentController,
-              decoration: const InputDecoration(labelText: '내용을 입력해주세요'),
-              maxLines: 5,
-              maxLength: 200,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _submitInquiry,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: safeTgreen,
-                foregroundColor: Colors.white,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('1:1 문의하기'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  labelText: '문의 분류',
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: safeTgreen),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: safeTgreen),
+                  ),
+                ),
+                items: ['기타', '결제', '벌점', '회원정보'].map((category) {
+                  return DropdownMenuItem(
+                    value: category,
+                    child: Text(category),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedCategory = value!;
+                  });
+                },
+                value: selectedCategory,
               ),
-              child: const Text('제출'),
-            ),
-          ],
+              TextFormField(
+                controller: _titleController,
+                decoration: InputDecoration(
+                  labelText: '제목을 입력해주세요',
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: safeTgreen), // 포커스될 때의 색상을 safeTgreen으로 설정
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: safeTgreen), // 기본 보더 색상도 safeTgreen으로 설정
+                  ),
+                ),
+                style: TextStyle(color: Colors.black), // 입력 텍스트 색상 변경
+              ),
+              TextFormField(
+                controller: _contentController,
+                decoration: InputDecoration(
+                  labelText: '내용을 입력해주세요',
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: safeTgreen), // 포커스될 때의 색상을 safeTgreen으로 설정
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: safeTgreen), // 기본 보더 색상도 safeTgreen으로 설정
+                  ),
+                ),
+                maxLines: 5,
+                maxLength: 200,
+                style: TextStyle(color: Colors.black), // 입력 텍스트 색상 변경
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _submitInquiry,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: safeTgreen,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text('제출'),
+              ),
+            ],
+          ),
         ),
       ),
     );

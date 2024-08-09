@@ -29,7 +29,6 @@ import 'pages/profile_page.dart';
 import 'pages/rent_page.dart';
 import 'pages/return_page.dart';
 import 'pages/splash_page.dart';
-import 'pages/theme_provider.dart';
 import 'pages/violation_data.dart';
 
 const Color safeTblack = Color(0xFF1A1A1A);
@@ -60,14 +59,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => InquiryData()),
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => ViolationData()),
       ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
-          return MaterialApp(
+      child: MaterialApp(
             title: 'SafeT',
-            theme: themeProvider.isDarkMode ? ThemeData.dark() : ThemeData.light(),
+            theme: ThemeData.light(),
             home: SplashPage(),
             onGenerateRoute: (settings) {
               switch (settings.name) {
@@ -164,9 +160,7 @@ class MyApp extends StatelessWidget {
                   return MaterialPageRoute(builder: (context) => SplashPage());
               }
             },
-          );
-        },
-      ),
+          ),
     );
   }
 }

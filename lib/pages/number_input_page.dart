@@ -14,12 +14,18 @@ class NumberInputPage extends StatefulWidget {
 class _NumberInputPageState extends State<NumberInputPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('번호 입력'),
+    return Theme(
+      data: Theme.of(context).copyWith(
+        scaffoldBackgroundColor: safeTlightgreen,
       ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('번호 입력'),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
       body: Container(
-        color: safeTgreen, // 전체 배경색 지정
+        color: Colors.white, // 전체 배경색 지정
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0), // 여백 추가
@@ -33,7 +39,7 @@ class _NumberInputPageState extends State<NumberInputPage> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: '번호를 입력하세요',
-                    labelStyle: TextStyle(color: Colors.white), // 라벨 텍스트 색상
+                    labelStyle: TextStyle(color: safeTgreen), // 라벨 텍스트 색상
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: safeTgreen), // 입력 필드 외곽선 색상
                     ),
@@ -42,7 +48,7 @@ class _NumberInputPageState extends State<NumberInputPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20), // 입력 필드와 버튼 사이의 여백
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     widget.onNumberEntered();
@@ -52,12 +58,13 @@ class _NumberInputPageState extends State<NumberInputPage> {
                     foregroundColor: Colors.white,
                   ),
                   child: Text('확인'),
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
+      )
     );
   }
 }

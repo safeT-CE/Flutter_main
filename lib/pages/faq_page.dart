@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../main.dart';
 import 'inquiry_tile.dart';
 
 class FAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container( 
-      color: safeTgreen,
+      color: Colors.white,
       child: ListView(
         children: [
           InquiryTile(

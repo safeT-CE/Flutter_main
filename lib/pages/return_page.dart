@@ -5,12 +5,18 @@ import '../main.dart';
 class ReturnPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('반납하기'),
+    return Theme(
+      data: Theme.of(context).copyWith(
+        scaffoldBackgroundColor: Colors.white,
       ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('반납하기'),
+          backgroundColor: Colors.white, 
+          foregroundColor: Colors.black,
+        ),
       body: Container(
-        color: safeTgreen, 
+        color: safeTlightgreen, 
         child: Center(
           child: ElevatedButton(
             onPressed: () {
@@ -20,10 +26,11 @@ class ReturnPage extends StatelessWidget {
               backgroundColor: safeTgreen,
               foregroundColor: Colors.white,
             ),
-            child: Text('반납하기'),
+              child: Text('반납하기'),
+            ),
           ),
         ),
-      ),
+      )
     );
   }
 

@@ -16,11 +16,17 @@ class _RentPageState extends State<RentPage> {
   QRViewController? controller;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('대여하기'),
+    Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        scaffoldBackgroundColor: Colors.white,
       ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('대여하기'),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -81,12 +87,13 @@ class _RentPageState extends State<RentPage> {
                     }
                   },
                   child: Icon(Icons.flashlight_on),
-                ),
-              ],
-            ),
-          ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 

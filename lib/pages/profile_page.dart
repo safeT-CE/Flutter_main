@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:safet/pages/inquiry_page.dart';
-import 'package:safet/pages/theme_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
@@ -101,14 +99,17 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('프로필'),
+    Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        scaffoldBackgroundColor: safeTlightgreen,
       ),
-      backgroundColor: safeTgreen,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('이용권 구매'),
+          backgroundColor: Colors.white,
+        ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -159,14 +160,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-             /* const Divider(),
-              SwitchListTile(
-                title: const Text('다크모드'),
-                value: themeProvider.isDarkMode,
-                onChanged: (bool value) {
-                  themeProvider.toggleTheme(value);
-                },
-              ),*/
               const Divider(),
               ListTile(
                 title: const Text('공지사항'),
@@ -221,13 +214,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ListTile(
                 title: const Text('로그아웃'),
                 onTap: () {
-                  _showLogoutPopup(context);
-                },
-              ),
-            ],
+                    _showLogoutPopup(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      )
     );
   }
 }

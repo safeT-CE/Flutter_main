@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:safet/main.dart';
 
 class AnnouncementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('공지사항'),
+        backgroundColor: Colors.white,
+        title: Text(
+          '공지사항',
+          style: TextStyle(color: Colors.black), 
+        ),
       ),
+      backgroundColor: Colors.white,
       body: AnnouncementList(),
     );
   }
@@ -73,13 +79,24 @@ class AnnouncementTile extends StatelessWidget {
   final String date;
   final String content;
 
-  AnnouncementTile({required this.title, required this.date, required this.content});
+  AnnouncementTile({
+    required this.title,
+    required this.date,
+    required this.content,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: Text(title),
+      title: Text(
+        title,
+        style: TextStyle(
+          color: safeTgreen,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       subtitle: Text(date),
+      iconColor: safeTgreen,
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),

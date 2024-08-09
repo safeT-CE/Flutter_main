@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../main.dart';
 import 'faq_page.dart';
 import 'one_on_one_inquiry_page.dart';
 import 'personal_inquiry_page.dart';
@@ -20,7 +19,7 @@ class InquiryPage extends StatelessWidget {
             ],
           ),
         ),
-        backgroundColor: safeTgreen,
+        backgroundColor: Colors.white,
         body: TabBarView(
           children: [
             FAQPage(),
@@ -39,7 +38,7 @@ class InquiryPage extends StatelessWidget {
               ),
             );
           },
-          backgroundColor: safeTgreen,
+          backgroundColor: Colors.white,
           foregroundColor: Colors.white,
           child: const Icon(Icons.add),
         ),
