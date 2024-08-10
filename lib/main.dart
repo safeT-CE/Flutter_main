@@ -19,6 +19,7 @@ import 'pages/auth_page.dart';
 import 'pages/home_page.dart';
 import 'pages/identification_page.dart';
 import 'pages/inquiry_data.dart';
+import 'pages/lock_page.dart';
 import 'pages/login_page.dart';
 import 'pages/map_page.dart';
 import 'pages/number_input_page.dart';
@@ -129,6 +130,8 @@ class MyApp extends StatelessWidget {
                   return MaterialPageRoute(builder: (context) => PhoneNumberInputPage());
                 case '/home':
                   return MaterialPageRoute(builder: (context) => HomePage());
+                case '/lock':
+                  return MaterialPageRoute(builder: (context) => LockedPage());
                 case '/login':
                   return MaterialPageRoute(builder: (context) => LoginPage());
                 case '/map':
