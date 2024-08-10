@@ -10,7 +10,6 @@ import 'package:safet/pages/auth_phonenum_page.dart';
 import 'pages/agreement_page.dart';
 import 'pages/alarm_page.dart';
 import 'pages/announcement_page.dart';
-import 'pages/ask_page.dart';
 import 'pages/auth_face_how_page.dart';
 import 'pages/auth_idcard_cam_page.dart';
 import 'pages/auth_idcard_how_page.dart';
@@ -148,8 +147,6 @@ class MyApp extends StatelessWidget {
                   return MaterialPageRoute(builder: (context) => NumberInputPage(onNumberEntered: () {}));
                 case '/identification':
                   return MaterialPageRoute(builder: (context) => IdentificationPage());
-                case '/ask':
-                  return MaterialPageRoute(builder: (context) => AskPage());
                 case '/penalty':
                   return MaterialPageRoute(builder: (context) => PenaltyPage());
                 case '/one_on_one_inquiry':

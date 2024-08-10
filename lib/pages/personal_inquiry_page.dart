@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../main.dart';
 import 'inquiry_data.dart';
 import 'inquiry_tile.dart';
 
@@ -11,7 +10,7 @@ class PersonalInquiryPage extends StatelessWidget {
     final inquiries = Provider.of<InquiryData>(context).inquiries;
 
     return Container(
-      color: safeTgreen,
+      color: Colors.white,
       child: ListView.builder(
         itemCount: inquiries.length,
         itemBuilder: (context, index) {

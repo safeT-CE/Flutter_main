@@ -67,18 +67,22 @@ class _OneOnOneInquiryPageState extends State<OneOnOneInquiryPage> {
     return Theme(
       data: Theme.of(context).copyWith(
         colorScheme: Theme.of(context).colorScheme.copyWith(
-              primary: safeTgreen, // 기본 테마 색상을 safeTgreen으로 설정
+              primary: safeTgreen, 
             ),
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: safeTgreen, // 커서 색상
-          selectionColor: safeTgreen.withOpacity(0.5), // 텍스트 선택 색상
-          selectionHandleColor: safeTgreen, // 핸들 색상 (드래그할 때 나타나는 손잡이)
+          cursorColor: safeTgreen, 
+          selectionColor: safeTgreen.withOpacity(0.5), 
+          selectionHandleColor: safeTgreen, 
         ),
       ),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('1:1 문의하기'),
+          backgroundColor: Colors.white, // AppBar 배경색 흰색으로 설정
+          foregroundColor: Colors.black, // AppBar 텍스트 색상 검정으로 설정
+          iconTheme: IconThemeData(color: Colors.black), // AppBar 아이콘 색상 검정으로 설정
         ),
+        backgroundColor: Colors.white, // 전체 배경색 흰색으로 설정
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -111,28 +115,28 @@ class _OneOnOneInquiryPageState extends State<OneOnOneInquiryPage> {
                 decoration: InputDecoration(
                   labelText: '제목을 입력해주세요',
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: safeTgreen), // 포커스될 때의 색상을 safeTgreen으로 설정
+                    borderSide: BorderSide(color: safeTgreen),
                   ),
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: safeTgreen), // 기본 보더 색상도 safeTgreen으로 설정
+                    borderSide: BorderSide(color: safeTgreen),
                   ),
                 ),
-                style: TextStyle(color: Colors.black), // 입력 텍스트 색상 변경
+                style: TextStyle(color: Colors.black),
               ),
               TextFormField(
                 controller: _contentController,
                 decoration: InputDecoration(
                   labelText: '내용을 입력해주세요',
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: safeTgreen), // 포커스될 때의 색상을 safeTgreen으로 설정
+                    borderSide: BorderSide(color: safeTgreen),
                   ),
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: safeTgreen), // 기본 보더 색상도 safeTgreen으로 설정
+                    borderSide: BorderSide(color: safeTgreen),
                   ),
                 ),
                 maxLines: 5,
                 maxLength: 200,
-                style: TextStyle(color: Colors.black), // 입력 텍스트 색상 변경
+                style: TextStyle(color: Colors.black),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
