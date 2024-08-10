@@ -7,35 +7,92 @@ class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
-    _checkLoginStatus();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2), // 애니메이션 속도를 늦추기 위해 2초로 설정
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    
+    // MediaQuery에 접근할 수 있는 시점이므로 여기서 Animation을 초기화
+    _animation = Tween<double>(
+      begin: -200, // 시작 위치 (화면 왼쪽 바깥)
+      end: MediaQuery.of(context).size.width / 2 - 40, // 끝 위치 (화면 중앙에서 오른쪽으로 10픽셀 이동)
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
+
+    _controller.forward(); // 애니메이션 시작
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        // 애니메이션 완료 후 2초 대기
+        Timer(Duration(seconds: 2), () {
+          _checkLoginStatus();
+        });
+      }
+    });
   }
 
   Future<void> _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
-    Timer(Duration(seconds: 3), () {
-      if (isLoggedIn) {
-        //Navigator.pushReplacementNamed(context, '/home');
-        Navigator.pushReplacementNamed(context, '/auth');
+    if (isLoggedIn) {
+      //Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/auth');
+    } else {
+      Navigator.pushReplacementNamed(context, '/auth');
+    }
+  }
 
-      } else {
-        Navigator.pushReplacementNamed(context, '/auth');
-      }
-    });
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Text('스플래시 페이지입니다.'),
-        //child: Image.asset('assets/image/logo.png', width: 200, height: 200),
+      body: Stack(
+        children: [
+          Center(
+            child: Text(
+              'safe',
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return Positioned(
+                left: _animation.value,
+                top: MediaQuery.of(context).size.height / 2 - 40, // 화면 중앙
+                child: child!,
+              );
+            },
+            child: Image.asset(
+              'assets/image/kickboard.png',
+              width: 100,
+              height: 100,
+            ),
+          ),
+        ],
       ),
     );
   }
