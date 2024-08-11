@@ -63,7 +63,18 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
             title: 'SafeT',
-            theme: ThemeData.light(),
+      theme: ThemeData(
+        primaryColor: safeTgreen, // 기본 색상
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: safeTgreen, // 강조 색상
+          secondary: safeTlightgreen, // 보조 색상
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: safeTgreen), // 포커스된 텍스트 필드의 강조 색상
+          ),
+        ),
+      ),
             home: SplashPage(),
             onGenerateRoute: (settings) {
               switch (settings.name) {

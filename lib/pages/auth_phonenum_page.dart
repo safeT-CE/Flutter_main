@@ -41,13 +41,14 @@ class _PhoneNumberInputPageState extends State<PhoneNumberInputPage> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-
-        child: Column(// 수직 방향 중앙 정렬 추가
-          crossAxisAlignment: CrossAxisAlignment.stretch, // 수평 방향 가득 채우기
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('휴대폰 번호를 입력해주세요.', 
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text(
+              '휴대폰 번호를 입력해주세요.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
             SizedBox(height: 16),
             Text('휴대폰 번호'),
             TextField(
@@ -57,6 +58,12 @@ class _PhoneNumberInputPageState extends State<PhoneNumberInputPage> {
               decoration: InputDecoration(
                 prefix: Text('+82 '),
                 hintText: '00-0000-0000',
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: safeTgreen, width: 2.0),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: safeTgray, width: 1.0),
+                ),
               ),
             ),
           ],

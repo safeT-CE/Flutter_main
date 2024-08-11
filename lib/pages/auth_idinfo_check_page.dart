@@ -191,6 +191,9 @@ class _IdInfoCheckPageState extends State<IdInfoCheckPage> {
               labelText: label,
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
+              enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: safeTlightgreen, width: 1.0), // 클릭되지 않은 상태의 경계선
+            ),
             ),
             hint: Text(hintText),
             value: value,
