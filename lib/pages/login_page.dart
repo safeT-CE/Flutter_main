@@ -28,7 +28,15 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset('assets/image/safeT.png', height: 80),
+            //Image.asset('assets/image/safeT.png', height: 80),
+            Text(
+          'safeT',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: safeTblack,
+            fontFamily: "safeTtitle",
+            fontSize: 30),
+        ),
             // SizedBox(height: 16),
             // Text(
             //   'LOGIN',

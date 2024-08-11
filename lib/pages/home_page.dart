@@ -9,7 +9,10 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Text(
           'safeT',
-          style: TextStyle(color: safeTblack),
+          style: TextStyle(
+            color: safeTblack,
+            fontFamily: "safeTtitle",
+            fontSize: 24),
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
