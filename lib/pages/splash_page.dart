@@ -73,6 +73,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
               'safe',
               style: TextStyle(
                 fontSize: 40,
+                fontFamily: "safeTtitle",
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -82,14 +83,14 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
             builder: (context, child) {
               return Positioned(
                 left: _animation.value,
-                top: MediaQuery.of(context).size.height / 2 - 40, // 화면 중앙
+                top: MediaQuery.of(context).size.height / 2 - 50, // 화면 중앙
                 child: child!,
               );
             },
             child: Image.asset(
               'assets/image/kickboard.png',
-              width: 100,
-              height: 100,
+              width: 150,
+              height: 150,
             ),
           ),
         ],
