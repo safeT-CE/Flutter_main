@@ -28,17 +28,17 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Image.asset('assets/image/logo.png', height: 150),
-            SizedBox(height: 16),
-            Text(
-              'LOGIN',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: safeTgray,
-              ),
-            ),
+            Image.asset('assets/image/safeT.png', height: 80),
+            // SizedBox(height: 16),
+            // Text(
+            //   'LOGIN',
+            //   textAlign: TextAlign.center,
+            //   style: TextStyle(
+            //     fontSize: 24,
+            //     fontWeight: FontWeight.bold,
+            //     color: safeTgray,
+            //   ),
+            // ),
             SizedBox(height: 32),
             TextField(
               controller: _phoneController,
