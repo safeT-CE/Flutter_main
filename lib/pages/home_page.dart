@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text('공지사항어쩌구버쩌구살라살라'),
+                      child: Text('2024년 이용권 업그레이드 안내'),
                     ),
                     Icon(
                       Icons.arrow_forward_ios,

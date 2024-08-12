@@ -7,9 +7,11 @@ class AnnouncementPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: safeTgreen),
         title: Text(
           '공지사항',
-          style: TextStyle(color: Colors.black), 
+          style: TextStyle(color: Colors.black),
         ),
       ),
       backgroundColor: Colors.white,
@@ -91,18 +93,31 @@ class AnnouncementTile extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-          color: safeTgreen,
+          color: safeTblack, // title 색상을 safeTblack으로 변경
           fontWeight: FontWeight.bold,
         ),
       ),
-      subtitle: Text(date),
-      iconColor: safeTgreen,
+      subtitle: Text(
+        date,
+        style: TextStyle(color: safeTgray), // date 색상을 safeTgray으로 변경
+      ),
+      iconColor: safeTlightgreen, // 화살표 아이콘 색상 safeTlightgreen으로 변경
+      collapsedIconColor: safeTlightgreen, // 펼쳐지기 전 아이콘 색상도 safeTlightgreen으로 설정
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(content),
         ),
       ],
+      // 경계선 색상을 safeTlightgreen으로 변경
+      shape: Border(
+        top: BorderSide(color: Colors.white),
+        bottom: BorderSide(color: safeTlightgreen),
+      ),
+      collapsedShape: Border(
+        top: BorderSide(color: Colors.white),
+        bottom: BorderSide(color: safeTlightgreen),
+      ),
     );
   }
 }
