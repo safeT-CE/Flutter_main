@@ -16,7 +16,7 @@ class PenaltyPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('벌점 기록'),
-          backgroundColor: Colors.white,
+          backgroundColor: safeTgreen,
           foregroundColor: Colors.black,
         ),
         body: Padding(

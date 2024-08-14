@@ -6,6 +6,8 @@ import 'package:safet/models/user_info.dart';
 import 'package:safet/pages/auth_done_page.dart';
 import 'package:safet/pages/auth_face_cam_page.dart';
 import 'package:safet/pages/auth_phonenum_page.dart';
+import 'package:safet/pages/detailed_usage_data.dart';
+import 'package:safet/pages/detailed_usage_map_page.dart';
 
 import 'pages/agreement_page.dart';
 import 'pages/alarm_page.dart';
@@ -33,7 +35,7 @@ import 'pages/violation_data.dart';
 
 const Color safeTblack = Color(0xFF1A1A1A);
 const Color safeTgray = Color(0xFFA1A1A1);
-const Color safeTgreen = Color(0xFFAFD08F);
+const Color safeTgreen = Color.fromARGB(255, 175, 208, 143); //#afd08f  //0xFFAFAF8F
 const Color safeTlightgreen = Color(0xFFE7F1DE);
 
 Future<void> main() async {
@@ -60,6 +62,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => InquiryData()),
         ChangeNotifierProvider(create: (context) => ViolationData()),
+        ChangeNotifierProvider(create: (context) => DetailedUsageData())
       ],
       child: MaterialApp(
             title: 'SafeT',
@@ -134,6 +137,20 @@ class MyApp extends StatelessWidget {
                       licenseImage: args['licenseImage'],
                     ),
                   );
+                case '/detailed_usage_map':
+                  if (settings.arguments is DetailedUsage) {
+                    final usage = settings.arguments as DetailedUsage;
+                    return MaterialPageRoute(
+                      builder: (context) => DetailedUsageMapPage(usage: usage),
+                    );
+                  } else {
+                    return MaterialPageRoute(
+                      builder: (context) => Scaffold(
+                        body: Center(child: Text('Invalid map data.')),
+                      ),
+                    );
+                  }
+    
                 case '/auth':
                   return MaterialPageRoute(builder: (context) => AuthPage());
                 case '/auth_phonenumber':
@@ -169,6 +186,7 @@ class MyApp extends StatelessWidget {
                   );
                 default:
                   return MaterialPageRoute(builder: (context) => SplashPage());
+                
               }
             },
           ),

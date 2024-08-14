@@ -12,11 +12,11 @@ class ReturnPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('반납하기'),
-          backgroundColor: Colors.white, 
+          backgroundColor: safeTgreen, 
           foregroundColor: Colors.black,
         ),
       body: Container(
-        color: safeTlightgreen, 
+        color: Colors.white, 
         child: Center(
           child: ElevatedButton(
             onPressed: () {

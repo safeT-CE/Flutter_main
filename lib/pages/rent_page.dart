@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../main.dart';
-import 'face_recognition_page.dart';
+import 'identification_page.dart';
 import 'number_input_page.dart';
 
 class RentPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class _RentPageState extends State<RentPage> {
   QRViewController? controller;
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
         scaffoldBackgroundColor: Colors.white,
@@ -27,73 +27,62 @@ class _RentPageState extends State<RentPage> {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
         ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 5,
-              child: QRView(
-                key: qrKey,
-                onQRViewCreated: _onQRViewCreated,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(20),
-                  backgroundColor: safeTgreen,
-                  foregroundColor: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NumberInputPage(
-                          onNumberEntered: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FaceRecognitionPage(
-                                  onFaceRecognized: () {
-                                    Navigator.pop(context); // 얼굴 인식 페이지 닫기
-                                    _showBatteryPopup(context); // 배터리 팝업 표시
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                  child: Icon(Icons.dialpad),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 5,
+                child: QRView(
+                  key: qrKey,
+                  onQRViewCreated: _onQRViewCreated,
                 ),
-                SizedBox(width: 20),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(20),
-                    backgroundColor: safeTgreen,
-                    foregroundColor: Colors.white,
-
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(20),
+                      backgroundColor: safeTgreen,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NumberInputPage(
+                            onNumberEntered: () {
+                              _navigateToIdentification(context);
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                    child: Icon(Icons.dialpad),
                   ),
-                  onPressed: () {
-                    if (controller != null) {
-                      controller?.toggleFlash();
-                    }
-                  },
-                  child: Icon(Icons.flashlight_on),
+                  SizedBox(width: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(20),
+                      backgroundColor: safeTgreen,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () {
+                      if (controller != null) {
+                        controller?.toggleFlash();
+                      }
+                    },
+                    child: Icon(Icons.flashlight_on),
                   ),
                 ],
               ),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 
@@ -108,23 +97,22 @@ class _RentPageState extends State<RentPage> {
       });
 
       if (result != null) {
-        _navigateToFaceRecognition(context);
+        _navigateToIdentification(context);
       }
     });
   }
 
-  void _navigateToFaceRecognition(BuildContext context) {
+  void _navigateToIdentification(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => FaceRecognitionPage(
-          onFaceRecognized: () {
-            Navigator.pop(context); // 얼굴 인식 페이지 닫기
-            _showBatteryPopup(context); // 배터리 팝업 표시
-          },
-        ),
+        builder: (context) => IdentificationPage(),
       ),
-    );
+    ).then((isIdentified) {
+      if (isIdentified != null && isIdentified) {
+        _showBatteryPopup(context);
+      }
+    });
   }
 
   @override
@@ -180,7 +168,7 @@ class _RentPageState extends State<RentPage> {
                 Navigator.pushNamed(context, '/home'); // 홈으로 이동
               },
               style: ElevatedButton.styleFrom(
-              foregroundColor: safeTgreen,
+                foregroundColor: safeTgreen,
               ),
               child: Text('확인'),
             ),

@@ -18,7 +18,7 @@ class PenaltyDetailPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('벌점 상세'),
-          backgroundColor: Colors.white,
+          backgroundColor: safeTgreen,
           foregroundColor: Colors.black,
         ),
         body: SingleChildScrollView(  

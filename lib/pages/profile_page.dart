@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import '../utils/auth_helper.dart';
 import 'announcement_page.dart';
+import 'detailed_usage_page.dart';
 import 'login_page.dart';
 import 'payment_selection_page.dart';
 import 'penalty_page.dart';
@@ -167,6 +168,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => AnnouncementPage()),
+                  );
+                },
+              ),
+              const Divider(),
+              ListTile(
+                title: const Text('상세이용내역'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DetailedUsagePage()),
                   );
                 },
               ),
