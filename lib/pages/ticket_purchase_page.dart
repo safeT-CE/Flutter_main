@@ -101,6 +101,7 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: const Text('결제 완료'),
           content: const Text('결제가 완료되었습니다.'),
           actions: <Widget>[

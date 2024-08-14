@@ -126,6 +126,7 @@ class _RentPageState extends State<RentPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text('배터리 정보'),
           content: Text('배터리가 NN% 남은 기기입니다. 대여하시겠습니까?'),
           actions: <Widget>[
@@ -159,6 +160,7 @@ class _RentPageState extends State<RentPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text('대여 완료'),
           content: Text('대여가 완료되었습니다.'),
           actions: <Widget>[

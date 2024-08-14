@@ -80,6 +80,7 @@ class _PaymentSelectionPageState extends State<PaymentSelectionPage> {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        backgroundColor: Colors.white,
         title: const Text('등록 완료'),
         content: const Text('등록이 완료되었습니다.'),
         actions: <Widget>[

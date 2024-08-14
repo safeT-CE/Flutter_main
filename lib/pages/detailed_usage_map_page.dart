@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
-import 'package:safet/main.dart';
 
 import 'detailed_usage_data.dart';
 
@@ -38,8 +37,9 @@ class _DetailedUsageMapPageState extends State<DetailedUsageMapPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('상세 이용 지도'),
-        backgroundColor: safeTgreen,
+        backgroundColor: Colors.white,
       ),
+      backgroundColor: Colors.white,
       body: KakaoMap(
         onMapCreated: (controller) {
           setState(() {

@@ -16,7 +16,7 @@ class DetailedUsagePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('상세 이용 정보'),
-          backgroundColor: safeTgreen,
+          backgroundColor: Colors.white,
           foregroundColor: Colors.black,
         ),
         body: Padding(

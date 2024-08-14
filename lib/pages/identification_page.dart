@@ -41,6 +41,7 @@ class _IdentificationPageState extends State<IdentificationPage> {
       appBar: AppBar(
         title: Text('동일인 판별'),
       ),
+      backgroundColor: Colors.white,
       body: isCameraInitialized
           ? Column(
               children: <Widget>[

@@ -68,6 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: const Text('로그아웃 하시겠습니까?'),
           actions: <Widget>[
             TextButton(
@@ -109,6 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
         appBar: AppBar(
           title: Text('이용권 구매'),
           backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
         ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

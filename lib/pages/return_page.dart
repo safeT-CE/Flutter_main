@@ -12,7 +12,7 @@ class ReturnPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('반납하기'),
-          backgroundColor: safeTgreen, 
+          backgroundColor: Colors.white, 
           foregroundColor: Colors.black,
         ),
         body: Container(
@@ -43,6 +43,7 @@ class ReturnPage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Colors.white,
             title: Text('반납하시겠습니까?'),
             actions: <Widget>[
               TextButton(
@@ -77,7 +78,7 @@ class ReturnPage extends StatelessWidget {
   bool _checkParkingValidity() {
     // 여기서 주차 상태를 확인하는 로직을 추가하세요.
     // 예시로 항상 비정상적인 주차로 가정
-    return true; // 정상 주차일 경우 true, 비정상 주차일 경우 false 반환
+    return false; // 정상 주차일 경우 true, 비정상 주차일 경우 false 반환 여기서 결정해서 바꾸기!!! 
   }
 
   void _showInvalidParkingPopup(BuildContext context) {
@@ -85,6 +86,7 @@ class ReturnPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text('비정상적인 주차 감지'),
           content: Text('비정상적인 주차 상태로 인해 반납이 불가능합니다. 올바른 위치에 주차해주세요.'),
           actions: <Widget>[
@@ -108,6 +110,7 @@ class ReturnPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text('반납 완료'),
           content: Text('반납이 완료되었습니다.'),
           actions: <Widget>[
