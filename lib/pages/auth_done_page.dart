@@ -41,7 +41,7 @@ class AuthDonePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Image.asset(
-              'assets/image/seed.png',
+              'assets/image/level1.png',
               height: 100, // 이미지 크기
             ),
             SizedBox(height: 20),
