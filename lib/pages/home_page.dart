@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Image.asset('assets/image/seed.png', width: 50, height: 50),
+                    Image.asset('assets/image/level1.png', width: 50, height: 50),
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
