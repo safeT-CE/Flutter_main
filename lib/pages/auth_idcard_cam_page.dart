@@ -44,7 +44,7 @@ class _IdCamPageState extends State<IdCamPage> {
   void _startFocusTimer() {
     _focusTimer = Timer.periodic(Duration(seconds: 5), (timer) {
       if (_controller.value.isInitialized) {
-        _controller.setFocusPoint(null); // 포커스를 재조정하기 위해 초점 재설정
+        _controller.setFocusPoint(null);
       }
     });
   }
@@ -81,10 +81,10 @@ class _IdCamPageState extends State<IdCamPage> {
           MaterialPageRoute(
             builder: (context) => IdInfoCheckPage(
               recognizedLines: _recognizedLines,
-              licenseImage: File(image.path), // 이미지 파일 전달
-              dateOfIssue: dateOfIssue,       // 발급일 데이터 전달
-              dateOfBirth: dateOfBirth,       // 생년월일 데이터 전달
-              licenseNumber: licenseNumber,   // 면허번호 데이터 전달
+              licenseImage: File(image.path),
+              dateOfIssue: dateOfIssue,
+              dateOfBirth: dateOfBirth,
+              licenseNumber: licenseNumber,
             ),
           ),
         );
@@ -139,7 +139,19 @@ class _IdCamPageState extends State<IdCamPage> {
             future: _initializeControllerFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return CameraPreview(_controller);
+                return Center(
+                  child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: CameraPreview(_controller),
+                      ),
+                    ),
+                  ),
+                );
               } else {
                 return Center(child: CircularProgressIndicator());
               }
@@ -245,17 +257,13 @@ class _IdCamPageState extends State<IdCamPage> {
             ),
           Positioned(
             bottom: 16,
-            left: 16,
-            right: 16,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
+            left: 0,
+            right: 0,
+            child: Center(
+              child: FloatingActionButton(
                 backgroundColor: safeTgreen,
-                minimumSize: Size(double.infinity, 50),
-              ),
-              onPressed: _processImage,
-              child: Text(
-                '다음',
-                style: TextStyle(fontSize: 18),
+                onPressed: _processImage,
+                child: Icon(Icons.camera_alt, size: 28),
               ),
             ),
           ),
