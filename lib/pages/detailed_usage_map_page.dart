@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 
 import 'detailed_usage_data.dart';
+import '../main.dart';
 
 class DetailedUsageMapPage extends StatefulWidget {
   final DetailedUsage usage;
@@ -34,7 +35,7 @@ class _DetailedUsageMapPageState extends State<DetailedUsageMapPage> {
           Polyline(
             polylineId: 'route',
             points: widget.usage.path, // 경로에 사용할 좌표 리스트
-            strokeColor: Colors.green, // 경로 색상
+            strokeColor: safeTgreen, // 경로 색상
             strokeWidth: 5, // 경로 두께
           ),
         ],
