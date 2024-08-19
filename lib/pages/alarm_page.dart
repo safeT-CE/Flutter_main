@@ -38,6 +38,8 @@ class AlarmPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: safeTgreen),
         title: Text(
           '벌점 알림',
           style: TextStyle(color: Colors.black),
@@ -116,18 +118,30 @@ class PenaltyTile extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-          color: safeTgreen,
+          color: safeTblack, 
           fontWeight: FontWeight.bold,
         ),
       ),
-      subtitle: Text(date),
-      iconColor: safeTgreen,
+      subtitle: Text(
+        date,
+        style: TextStyle(color: safeTgray), 
+      ),
+      iconColor: safeTlightgreen, 
+      collapsedIconColor: safeTlightgreen, 
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(content),
         ),
       ],
+      shape: Border(
+        top: BorderSide(color: Colors.white),
+        bottom: BorderSide(color: safeTlightgreen),
+      ),
+      collapsedShape: Border(
+        top: BorderSide(color: Colors.white),
+        bottom: BorderSide(color: safeTlightgreen),
+      ),
     );
   }
 }

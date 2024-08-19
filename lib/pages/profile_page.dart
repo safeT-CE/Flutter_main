@@ -108,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('이용권 구매'),
+          title: Text('마이페이지'),
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           elevation: 0,
@@ -164,9 +164,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              const Divider(),
-              ListTile(
-                title: const Text('공지사항'),
+                const SizedBox(height: 16),
+                _buildListTileWithBorder(
+                title: '공지사항',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -174,9 +174,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
               ),
-              const Divider(),
-              ListTile(
-                title: const Text('상세이용내역'),
+                _buildListTileWithBorder(
+                  title: '상세이용내역',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -184,9 +183,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
               ),
-              const Divider(),
-              ListTile(
-                title: const Text('벌점 기록'),
+                _buildListTileWithBorder(
+                  title: '벌점 기록',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -194,9 +192,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
               ),
-              const Divider(),
-              ListTile(
-                title: const Text('카드 등록'),
+                _buildListTileWithBorder(
+                  title: '카드 등록',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -204,9 +201,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
               ),
-              const Divider(),
-              ListTile(
-                title: const Text('문의하기'),
+                _buildListTileWithBorder(
+                  title: '문의하기',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -214,9 +210,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
               ),
-              const Divider(),
-              ListTile(
-                title: const Text('이용권 구매'),
+                _buildListTileWithBorder(
+                  title: '이용권 구매',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -224,9 +219,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
               ),
-              const Divider(),
-              ListTile(
-                title: const Text('로그아웃'),
+                _buildListTileWithBorder(
+                  title: '로그아웃',
                 onTap: () {
                     _showLogoutPopup(context);
                   },
@@ -239,3 +233,21 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+
+  Widget _buildListTileWithBorder({required String title, required VoidCallback onTap}) {
+    return Container(
+      padding: const EdgeInsets.all(8.0), 
+      decoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.white),
+          bottom: BorderSide(color: safeTlightgreen),
+        ),
+      ),
+      child: ListTile(
+        leading: Icon(Icons.arrow_forward_ios, color: safeTlightgreen, size: 16.0), // 왼쪽에 작은 화살표 아이콘 추가
+        title: Text(title),
+        onTap: onTap,
+      ),
+    );
+  }
+

@@ -44,8 +44,35 @@ class PenaltyPage extends StatelessWidget {
                           height: 50,
                           fit: BoxFit.cover,
                         ),
-                        title: Text(violation.title),
-                        subtitle: Text(violation.date),
+                        title: Text(violation.title,
+                        style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.red,
+                              ),),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  violation.date,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  '누적 ${violation.count}회',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                         onTap: () {
                           Navigator.push(
                             context,

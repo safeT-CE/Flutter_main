@@ -14,23 +14,6 @@ class DetailedUsageMapPage extends StatefulWidget {
 
 class _DetailedUsageMapPageState extends State<DetailedUsageMapPage> {
   late KakaoMapController mapController;
-  Set<Marker> markers = {};  // 마커들을 저장할 변수
-
-  @override
-  void initState() {
-    super.initState();
-    _setMarker();  // 초기화 시 선택된 위치를 기반으로 마커 추가
-  }
-
-  // 선택된 위치에 마커 추가
-  void _setMarker() {
-    setState(() {
-      markers.add(Marker(
-        markerId: UniqueKey().toString(),
-        latLng: widget.usage.location,
-      ));
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +29,26 @@ class _DetailedUsageMapPageState extends State<DetailedUsageMapPage> {
             mapController = controller;
           });
         },
-        markers: markers.toList(),  // 마커들을 지도에 추가
-        center: widget.usage.location,  // 지도 중심 설정
+        center: widget.usage.path.first, // 경로의 시작 지점을 중심으로 설정
+        polylines: [
+          Polyline(
+            polylineId: 'route',
+            points: widget.usage.path, // 경로에 사용할 좌표 리스트
+            strokeColor: Colors.green, // 경로 색상
+            strokeWidth: 5, // 경로 두께
+          ),
+        ],
+        markers: [
+          Marker(
+            markerId: 'start',
+            latLng: widget.usage.path.first, // 경로 시작 지점
+          ),
+          Marker(
+            markerId: 'end',
+            latLng: widget.usage.path.last, // 경로 끝 지점
+          ),
+        ],
+        maxLevel: 16, // 적절한 줌 레벨 설정
       ),
     );
   }

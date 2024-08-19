@@ -88,7 +88,7 @@ class ReturnPage extends StatelessWidget {
         return AlertDialog(
           backgroundColor: Colors.white,
           title: Text('비정상적인 주차 감지'),
-          content: Text('비정상적인 주차 상태로 인해 반납이 불가능합니다. 올바른 위치에 주차해주세요.'),
+          content: Text('비정상적인 주차 상태로 인해 \n반납이 불가능합니다.\n올바른 위치에 주차해주세요.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {

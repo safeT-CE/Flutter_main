@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:safet/main.dart';
 
+import '../main.dart'; // 새로 만든 지도 페이지 import
 import 'one_on_one_inquiry_page.dart';
-import 'violation_data.dart';
+import 'penalty_detailed_map.dart';
+import 'violation_data.dart'; // ViolationItem 클래스 import
 
 class PenaltyDetailPage extends StatelessWidget {
   final ViolationItem violation;
@@ -22,7 +23,7 @@ class PenaltyDetailPage extends StatelessWidget {
           foregroundColor: Colors.black,
         ),
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(  
+        body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Card(
@@ -30,7 +31,7 @@ class PenaltyDetailPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               elevation: 4,
-              color: safeTlightgreen, 
+              color: safeTlightgreen,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -72,11 +73,23 @@ class PenaltyDetailPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.asset(
-                        violation.mapImagePath,
-                        height: 150,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+                      child: GestureDetector(
+                        onTap: () {
+                          // 이미지를 클릭하면 지도 페이지로 이동
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PenaltyDetailedMapPage(violation: violation),
+                            ),
+                          );
+                        },
+                        child: Image.asset(
+                          violation.mapImagePath,
+                          height: 150,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),

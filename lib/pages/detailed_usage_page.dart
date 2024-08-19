@@ -43,8 +43,37 @@ class DetailedUsagePage extends StatelessWidget {
                           height: 50,
                           fit: BoxFit.cover,
                         ),
-                        title: Text('${usage.date} - ${usage.driveTime}'),
-                        subtitle: Text('주행 거리: ${usage.driveDistance} km'),
+                          title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              usage.date,
+                              style: TextStyle(
+                                fontSize: 15, 
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  usage.driveTime,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  '${usage.driveDistance} km',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                         onTap: () {
                           Navigator.push(
                             context,

@@ -21,7 +21,7 @@ class InquiryTile extends StatelessWidget {
       title: Text(
         question,
         style: TextStyle(
-          color: safeTgreen, 
+          color: safeTblack, 
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -31,8 +31,8 @@ class InquiryTile extends StatelessWidget {
           color: Colors.black, 
         ),
       ),
-      iconColor: safeTgreen, 
-      collapsedIconColor: Colors.black, 
+      iconColor: safeTlightgreen, 
+      collapsedIconColor: safeTlightgreen, 
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -48,6 +48,14 @@ class InquiryTile extends StatelessWidget {
           ),
         ),
       ],
+            shape: Border(
+        top: BorderSide(color: Colors.white),
+        bottom: BorderSide(color: safeTlightgreen),
+      ),
+      collapsedShape: Border(
+        top: BorderSide(color: Colors.white),
+        bottom: BorderSide(color: safeTlightgreen),
+      ),
     );
   }
 }
