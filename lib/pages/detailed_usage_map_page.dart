@@ -3,6 +3,7 @@ import 'package:kakao_map_plugin/kakao_map_plugin.dart';
 
 import '../main.dart';
 import 'detailed_usage_data.dart';
+import '../main.dart';
 
 class DetailedUsageMapPage extends StatefulWidget {
   final DetailedUsage usage;
