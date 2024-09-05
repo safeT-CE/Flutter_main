@@ -77,18 +77,23 @@ class _AgreementPageState extends State<AgreementPage> {
             children: [
               Row(
                 children: [
-                  Checkbox(
-                    value: _allAgree,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _allAgree = value!;
-                        for (int i = 0; i < _agreeList.length; i++) {
-                          _agreeList[i] = _allAgree;
-                        }
-                      });
-                    },
-                    activeColor: safeTgreen,
-                    checkColor: Colors.white,
+                  Theme(
+                    data: ThemeData(
+                      unselectedWidgetColor: safeTlightgreen, // 체크되지 않은 상태의 테두리 색상
+                    ),
+                    child:Checkbox(
+                      value: _allAgree,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _allAgree = value!;
+                          for (int i = 0; i < _agreeList.length; i++) {
+                            _agreeList[i] = _allAgree;
+                          }
+                        });
+                      },
+                      activeColor: safeTgreen,
+                      checkColor: Colors.white,
+                    ),
                   ),
                   Text('약관 전체 동의'),
                 ],
@@ -147,6 +152,7 @@ class _AgreementPageState extends State<AgreementPage> {
           ),
         ),
       ),
+    
     );
   }
 }
