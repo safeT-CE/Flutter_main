@@ -48,6 +48,7 @@ class IdHowPage extends StatelessWidget {
               },
               child: Text(
                 '다음',
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],

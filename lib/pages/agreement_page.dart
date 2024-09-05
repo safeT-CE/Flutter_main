@@ -138,7 +138,10 @@ class _AgreementPageState extends State<AgreementPage> {
                   ),
                   minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 50)),
                 ),
-                child: Text('동의하고 진행'),
+                child: Text(
+                  '동의하고 진행',
+                style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
