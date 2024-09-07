@@ -18,16 +18,15 @@ class DetailedUsagePage extends StatelessWidget {
           title: Text('상세 이용 정보'),
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
+          elevation: 0,
+          centerTitle: true,
+
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                '이용 내역',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
               SizedBox(height: 16),
               Expanded(
                 child: ListView.builder(

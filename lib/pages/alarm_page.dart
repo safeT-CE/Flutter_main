@@ -38,6 +38,7 @@ class AlarmPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        centerTitle: true,
         elevation: 0,
         iconTheme: IconThemeData(color: safeTgreen),
         title: Text(

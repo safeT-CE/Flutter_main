@@ -14,6 +14,8 @@ class ReturnPage extends StatelessWidget {
           title: Text('반납하기'),
           backgroundColor: Colors.white, 
           foregroundColor: Colors.black,
+          centerTitle: true,
+          elevation: 0, 
         ),
         body: Container(
           color: Colors.white, 
@@ -62,6 +64,7 @@ class ReturnPage extends StatelessWidget {
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: safeTgreen, // 버튼 글씨 색상 지정
+                  padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
                 ),
                 child: Text('반납하기'),
               ),

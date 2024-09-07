@@ -12,6 +12,17 @@ class NumberInputPage extends StatefulWidget {
 }
 
 class _NumberInputPageState extends State<NumberInputPage> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    // 위젯이 빌드되고 나서 포커스를 요청합니다.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(_focusNode);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -23,6 +34,7 @@ class _NumberInputPageState extends State<NumberInputPage> {
           title: Text('번호 입력'),
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
+          centerTitle: true, 
         ),
       body: Container(
         color: Colors.white, // 전체 배경색 지정
@@ -39,12 +51,12 @@ class _NumberInputPageState extends State<NumberInputPage> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: '번호를 입력하세요',
-                    labelStyle: TextStyle(color: safeTgreen), // 라벨 텍스트 색상
+                    labelStyle: TextStyle(color: safeTgray), // 라벨 텍스트 색상
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: safeTgreen), // 입력 필드 외곽선 색상
+                      borderSide: BorderSide(color: safeTgray), // 입력 필드 외곽선 색상
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: safeTgreen), // 입력 필드 포커스 외곽선 색상
+                      borderSide: BorderSide(color: safeTgray), // 입력 필드 포커스 외곽선 색상
                     ),
                   ),
                 ),

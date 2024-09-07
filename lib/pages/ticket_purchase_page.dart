@@ -23,7 +23,9 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
         appBar: AppBar(
           title: Text('이용권 구매'),
           backgroundColor: Colors.white, // AppBar 배경색을 흰색으로 설정
-          foregroundColor: Colors.black, // AppBar 텍스트 색상을 검은색으로 설정
+          foregroundColor: Colors.black,
+          elevation: 0,
+          centerTitle: true, // AppBar 텍스트 색상을 검은색으로 설정
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -31,10 +33,11 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text('대여시간', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 16),
+              const SizedBox(height: 25),
               Wrap(
                 spacing: 8.0,
-                runSpacing: 8.0,
+                runSpacing: 15.0,
+                alignment: WrapAlignment.center,
                 children: [
                   _buildDurationButton('30분', 1000),
                   _buildDurationButton('1시간', 2000),
@@ -46,8 +49,8 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
               Container(
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: safeTlightgreen, 
-                  borderRadius: BorderRadius.circular(8.0),
+                  color: safeTlightgreen,
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +83,9 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
   }
 
   Widget _buildDurationButton(String duration, int amount) {
-    return ElevatedButton(
+    return Container(
+    width: (MediaQuery.of(context).size.width - 64) / 2,  // 화면 크기에 맞춰 2개씩 배치
+    child: ElevatedButton(
       onPressed: () {
         setState(() {
           _selectedDuration = duration;
@@ -93,6 +98,7 @@ class _TicketPurchasePageState extends State<TicketPurchasePage> {
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       ),
       child: Text(duration),
+    )
     );
   }
 

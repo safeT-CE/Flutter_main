@@ -21,7 +21,7 @@ class _IdentificationPageState extends State<IdentificationPage> {
     final cameras = await availableCameras();
     final frontCamera = cameras.firstWhere(
         (camera) => camera.lensDirection == CameraLensDirection.front);
-    _controller = CameraController(frontCamera, ResolutionPreset.medium);
+    _controller = CameraController(frontCamera, ResolutionPreset.high);
     await _controller.initialize();
     if (!mounted) return;
     setState(() {
@@ -40,8 +40,10 @@ class _IdentificationPageState extends State<IdentificationPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('동일인 판별'),
+        backgroundColor: Colors.transparent, // AppBar 배경을 투명하게 설정
+        elevation: 0, // 그림자 제거
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, // 전체 배경을 검정색으로 설정
       body: isCameraInitialized
           ? Column(
               children: <Widget>[
@@ -50,7 +52,7 @@ class _IdentificationPageState extends State<IdentificationPage> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      CameraPreview(_controller),
+                      CameraPreview(_controller), // CameraPreview가 제대로 표시되도록 설정
                       Container(
                         width: 250,
                         height: 250,
@@ -74,18 +76,18 @@ class _IdentificationPageState extends State<IdentificationPage> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            color: Colors.black, // 텍스트를 흰색으로 설정
                           ),
                         ),
                         SizedBox(height: 30),
                         ElevatedButton(
                           onPressed: () {
-                            // 여기에서 동일인 판별 로직을 추가할 수 있습니다.
                             Navigator.pop(context, true); // 동일인 판별이 성공하면 true를 반환
                           },
                           child: Text('다음'),
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white, 
-                            backgroundColor: safeTgreen, // 텍스트 색상
+                            foregroundColor: Colors.white,
+                            backgroundColor: safeTgreen, // 버튼 배경 색상
                             padding: EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 20),
                           ),

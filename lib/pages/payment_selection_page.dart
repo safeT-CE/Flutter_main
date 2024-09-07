@@ -26,6 +26,8 @@ class _PaymentSelectionPageState extends State<PaymentSelectionPage> {
           title: const Text('대여하기'),
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
+          elevation: 0, // 그림자 제거
+          centerTitle: true,
         ),
         body: Center(
           child: Column(

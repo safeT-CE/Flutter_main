@@ -26,10 +26,13 @@ class _RentPageState extends State<RentPage> {
           title: Text('대여하기'),
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
+          centerTitle: true,
         ),
-        body: Center(
+        body: Container(
+          color: Colors.transparent, // 배경을 투명하게 설정
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
                 flex: 5,
@@ -62,7 +65,7 @@ class _RentPageState extends State<RentPage> {
                     },
                     child: Icon(Icons.dialpad),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 100),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),

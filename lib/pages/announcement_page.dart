@@ -8,6 +8,7 @@ class AnnouncementPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        centerTitle: true,
         iconTheme: IconThemeData(color: safeTgreen),
         title: Text(
           '공지사항',

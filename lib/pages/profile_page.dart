@@ -112,6 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           elevation: 0,
+          centerTitle: true,
         ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -122,7 +123,10 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Container(
                 padding: const EdgeInsets.all(8.0),
-                color: Colors.lightGreen[100],
+                decoration: BoxDecoration(
+                color: safeTlightgreen,
+                borderRadius: BorderRadius.circular(12.0), // 모서리를 둥글게 조정
+              ),
                 child: Column(
                   children: [
                     Row(
@@ -151,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Image.asset('assets/image/seed.png', width: 50, height: 50),
+                        Image.asset('assets/image/level1.png', width: 50, height: 50),
                         const SizedBox(width: 8),
                         const Expanded(
                           child: Text(

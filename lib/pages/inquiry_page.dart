@@ -16,6 +16,8 @@ class InquiryPage extends StatelessWidget {
           title: const Text('문의하기'),
           backgroundColor: Colors.white, 
           foregroundColor: Colors.black,
+          elevation: 0,
+          centerTitle: true,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
