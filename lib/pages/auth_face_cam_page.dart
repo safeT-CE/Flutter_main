@@ -176,13 +176,18 @@ class _FaceCamPageState extends State<FaceCamPage> {
             left: 0,
             right: 0,
             child: Center(
-              child: FloatingActionButton(
-                backgroundColor: safeTgreen,
-                onPressed: _takePicture,
-                child: Icon(Icons.camera_alt, size: 28),
+              child: SizedBox(
+                width: 80,  // 버튼의 크기 조정
+                height: 80,  // 버튼의 크기 조정
+                child: FloatingActionButton(
+                  backgroundColor: safeTgreen,
+                  onPressed: _takePicture,
+                  child: Icon(Icons.camera_alt, size: 28),
+                ),
               ),
             ),
           ),
+          SizedBox(height: 30),
         ],
       ),
     );

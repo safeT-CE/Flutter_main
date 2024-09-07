@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart';
+import 'package:safet/main.dart';
 
 Set<Marker> markers = {}; // 마커 변수
 
@@ -43,7 +44,15 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('지도'),
+        title: Text('지도',
+            style: TextStyle(color: safeTblack),
+          ),
+          centerTitle: true, // title 중앙정렬
+          backgroundColor: Colors.white,
+          //elevation: 0, 
+          iconTheme: IconThemeData( // 뒤로 가기 화살표 색상 설정
+          color: safeTgreen,
+        ),
       ),
       backgroundColor: Colors.white,
       body: KakaoMap(
